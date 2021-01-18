@@ -4,11 +4,16 @@ import {Thumbnail} from 'native-base';
 
 import ProfileList from '../../components/ProfileList';
 
-export default function MyProfile() {
+export default function MyProfile({navigation}) {
   const list = [
-    {id: '1', name: 'My orders', status: 'Already have 12 orders'},
+    {
+      id: '1',
+      name: 'My orders',
+      status: 'Already have 12 orders',
+      path: 'MyOrders',
+    },
     {id: '2', name: 'Shipping addresses', status: '3 ddresses'},
-    {id: '3', name: '3 ddresses', status: 'Notifications, password'},
+    {id: '3', name: 'Settings', status: 'Notifications, password'},
   ];
 
   return (
@@ -36,7 +41,9 @@ export default function MyProfile() {
       </View>
       <FlatList
         data={list}
-        renderItem={({item}) => <ProfileList data={item} />}
+        renderItem={({item}) => (
+          <ProfileList data={item} navigation={navigation} />
+        )}
         keyExtractor={(item) => item.id}
       />
     </SafeAreaView>

@@ -1,23 +1,29 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function ProfileList({data}) {
+export default function ProfileList({data, navigation}) {
   return (
     <View>
-      <View style={styles.contentWrapper}>
-        <View>
+      <TouchableHighlight
+        activeOpacity={0.6}
+        underlayColor="#DDDDDD"
+        style={styles.touch}
+        onPress={() => navigation.navigate(data.path)}>
+        <View style={styles.contentWrapper}>
           <View>
-            <Text style={styles.name}>{data.name}</Text>
+            <View>
+              <Text style={styles.name}>{data.name}</Text>
+            </View>
+            <View>
+              <Text style={styles.status}>{data.status}</Text>
+            </View>
           </View>
           <View>
-            <Text style={styles.status}>{data.status}</Text>
+            <Icon name="keyboard-arrow-right" size={25} color="#9B9B9B" />
           </View>
         </View>
-        <View>
-          <Icon name="keyboard-arrow-right" size={25} color="#9B9B9B" />
-        </View>
-      </View>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -28,7 +34,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 36,
   },
   name: {
     fontSize: 16,
@@ -40,5 +45,11 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 11,
     color: '#9B9B9B',
+  },
+  touch: {
+    marginBottom: 26,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 5,
   },
 });

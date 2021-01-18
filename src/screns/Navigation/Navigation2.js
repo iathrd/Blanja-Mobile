@@ -4,15 +4,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-import {ProfileStack2} from './Navigation2';
-
 //screens
-import MyProfile from '../MyProfile/MyProfile';
+import MyOrder from '../MyProfile/MyOrders';
 
-export function ProfileStack() {
+export function ProfileStack2() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="MyProfile" component={MyProfile} />
+      <Stack.Screen name="MyOrders" component={MyOrder} />
     </Stack.Navigator>
   );
 }

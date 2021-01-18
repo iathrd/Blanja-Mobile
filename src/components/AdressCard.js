@@ -1,36 +1,30 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Card, CardItem, Left, Right, Body} from 'native-base';
 
 export default function AdressCard({data, navigation}) {
   return (
     <View style={styles.cardWrapper}>
       <Card style={styles.card}>
-        <TouchableHighlight
-          activeOpacity={0.6}
-          underlayColor="#DDDDDD"
-          style={styles.touch}
-          onPress={() => navigation.navigation('ShippingAdress')}>
-          <View style={data.isPrimary ? styles.primaryAdress : ''}>
-            <CardItem style={styles.headerCard}>
-              <Left>
-                <Text style={styles.name}>Jane Doe</Text>
-              </Left>
-              <Right>
-                <Text style={styles.changeText}>Change</Text>
-              </Right>
-            </CardItem>
-            <CardItem style={styles.adressContent}>
-              <Body style={styles.bodyWrapper}>
-                <View>
-                  <Text style={styles.adress}>
-                    3 Newbridge Court Chino Hills, CA 91709, United States
-                  </Text>
-                </View>
-              </Body>
-            </CardItem>
-          </View>
-        </TouchableHighlight>
+        <View style={data.isPrimary ? styles.primaryAdress : styles.adressB}>
+          <CardItem style={styles.headerCard}>
+            <Left>
+              <Text style={styles.name}>Jane Doe</Text>
+            </Left>
+            <Right>
+              <Text style={styles.changeText}>Change</Text>
+            </Right>
+          </CardItem>
+          <CardItem style={styles.adressContent}>
+            <Body style={styles.bodyWrapper}>
+              <View>
+                <Text style={styles.adress}>
+                  3 Newbridge Court Chino Hills, CA 91709, United States
+                </Text>
+              </View>
+            </Body>
+          </CardItem>
+        </View>
       </Card>
     </View>
   );
@@ -74,8 +68,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: '#DB3022',
     borderWidth: 1,
+    paddingLeft: 10,
+    paddingTop: 8,
+    paddingRight: 10,
   },
   cardWrapper: {
     marginBottom: 5,
+  },
+  adressB: {
+    paddingLeft: 10,
+    paddingTop: 8,
+    paddingRight: 10,
   },
 });

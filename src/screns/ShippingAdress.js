@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
-import {Item, Input} from 'native-base';
+import {Item, Input, Button} from 'native-base';
 import AdressCard from '../components/AdressCard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const data = [
   {id: '1', name: 'PPP', isPrimary: true},
   {id: '2', name: 'PPP', isPrimary: false},
+  {id: '3', name: 'PPP', isPrimary: false},
 ];
 
 export default function ShippingAdress({navigation}) {
@@ -26,12 +27,19 @@ export default function ShippingAdress({navigation}) {
         <View style={styles.labelWrapper}>
           <Text style={styles.labelText}>Shipping address</Text>
         </View>
-        <FlatList
-          data={data}
-          renderItem={({item}) => (
-            <AdressCard data={item} navigation={navigation} />
-          )}
-        />
+        <View>
+          <FlatList
+            data={data}
+            renderItem={({item}) => (
+              <AdressCard data={item} navigation={navigation} />
+            )}
+          />
+        </View>
+        <View style={styles.btnWrapper}>
+          <Button style={styles.btnAdd} full bordered rounded>
+            <Text style={styles.btnText}>ADD NEW ADDRESS</Text>
+          </Button>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -66,5 +74,18 @@ const styles = StyleSheet.create({
   },
   labelWrapper: {
     marginBottom: 21,
+  },
+  btnAdd: {
+    borderColor: '#222222',
+    borderWidth: 1.5,
+  },
+  btnWrapper: {
+    marginTop: 5,
+  },
+  btnText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#222222',
+    textTransform: 'uppercase',
   },
 });

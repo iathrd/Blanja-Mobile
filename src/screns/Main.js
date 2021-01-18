@@ -6,15 +6,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 
+import TabNavigation from './Navigation/TabNavigation';
+import ShippingAdress from './ShippingAdress';
+import {MyOrderStack} from './Navigation/Navigation';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-import Home from './Home/Home';
-import MyProfile from '../screns/MyProfile/MyProfile';
-
-import {ProfileStack} from './Navigation/Navigation';
-import TabNavigation from './Navigation/TabNavigation';
-import MyOrders from './MyProfile/MyOrders';
 
 export default function Main() {
   return (
@@ -25,7 +22,12 @@ export default function Main() {
           name="Main"
           component={TabNavigation}
         />
-        <Stack.Screen name="MyOrders" component={MyOrders} />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="MyOrders"
+          component={MyOrderStack}
+        />
+        <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
       </Stack.Navigator>
     </NavigationContainer>
   );

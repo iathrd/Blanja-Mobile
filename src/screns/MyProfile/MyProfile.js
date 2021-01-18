@@ -12,8 +12,18 @@ export default function MyProfile({navigation}) {
       status: 'Already have 12 orders',
       path: 'MyOrders',
     },
-    {id: '2', name: 'Shipping addresses', status: '3 ddresses'},
-    {id: '3', name: 'Settings', status: 'Notifications, password'},
+    {
+      id: '2',
+      name: 'Shipping addresses',
+      status: '3 addresses',
+      path: 'ShippingAdress',
+    },
+    {
+      id: '3',
+      name: 'Settings',
+      status: 'Notifications, password',
+      path: 'Settings',
+    },
   ];
 
   return (
@@ -55,6 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 14,
     paddingRight: 14,
+    paddingTop: 30,
   },
   labelText: {
     fontSize: 34,

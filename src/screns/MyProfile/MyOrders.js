@@ -7,7 +7,7 @@ const data = [
   {id: '2', name: 'Hallo'},
 ];
 
-export default function MyOrders() {
+export default function MyOrders({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -16,7 +16,9 @@ export default function MyOrders() {
         </View>
         <FlatList
           data={data}
-          renderItem={({item}) => <OrderCard data={item} />}
+          renderItem={({item}) => (
+            <OrderCard data={item} navigation={navigation} />
+          )}
         />
       </View>
     </SafeAreaView>

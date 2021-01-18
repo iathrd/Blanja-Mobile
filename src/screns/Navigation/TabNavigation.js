@@ -5,11 +5,10 @@ import Icon2 from 'react-native-vector-icons/Fontisto';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 //stackScreens
-import {ProfileStack} from './Navigation';
+import {MyProfiles} from './Navigation';
 
 //screens
 import Home from '../Home/Home';
-import MyProfile from '../MyProfile/MyProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -64,7 +63,7 @@ export default function TabNavigation() {
           ),
         }}
         name="Profile"
-        component={ProfileStack}
+        component={MyProfiles}
       />
     </Tab.Navigator>
   );

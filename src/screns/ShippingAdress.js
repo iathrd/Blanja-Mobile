@@ -10,7 +10,7 @@ const data = [
   {id: '3', name: 'PPP', isPrimary: false},
 ];
 
-export default function ShippingAdress({navigation}) {
+export default function ShippingAdress({navigation, route}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -31,12 +31,17 @@ export default function ShippingAdress({navigation}) {
           <FlatList
             data={data}
             renderItem={({item}) => (
-              <AdressCard data={item} navigation={navigation} />
+              <AdressCard data={item} navigation={navigation} route={route} />
             )}
           />
         </View>
         <View style={styles.btnWrapper}>
-          <Button style={styles.btnAdd} full bordered rounded>
+          <Button
+            onPress={() => navigation.navigate('AddShippingAdress')}
+            style={styles.btnAdd}
+            full
+            bordered
+            rounded>
             <Text style={styles.btnText}>ADD NEW ADDRESS</Text>
           </Button>
         </View>

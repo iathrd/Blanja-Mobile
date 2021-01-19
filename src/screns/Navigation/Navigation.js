@@ -10,6 +10,10 @@ import MyOrders from '../MyProfile/MyOrders';
 import OrderDetails from '../MyProfile/OrderDetails';
 import MyBag from '../Bag/MyBag';
 import Checkout from '../Bag/Checkout';
+import Success from '../Bag/Success';
+import ShippingAdress from '../ShippingAdress';
+import AddShippingAdress from '../AddShippingAdress';
+import ChangeShippingAdress from '../ChangeShippingAdress';
 
 export function MyBags() {
   return (
@@ -23,6 +27,7 @@ export function MyBagStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Checkout" component={Checkout} />
+      <Stack.Screen name="Success" component={Success} />
     </Stack.Navigator>
   );
 }
@@ -40,6 +45,19 @@ export function MyOrderStack() {
     <Stack.Navigator>
       <Stack.Screen name="MyOrders" component={MyOrders} />
       <Stack.Screen name="OrderDetails" component={OrderDetails} />
+    </Stack.Navigator>
+  );
+}
+
+export function adressStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
+      <Stack.Screen
+        name="ChangeShippingAdress"
+        component={ChangeShippingAdress}
+      />
+      <Stack.Screen name="AddShippingAdress" component={AddShippingAdress} />
     </Stack.Navigator>
   );
 }

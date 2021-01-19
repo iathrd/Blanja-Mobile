@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Card, CardItem, Left, Right, Body} from 'native-base';
 
-export default function AdressCard({data, navigation}) {
+export default function AdressCard({data, navigation, route}) {
   return (
     <View style={styles.cardWrapper}>
+      {console.log(route)}
       <Card style={styles.card}>
         <View style={data.isPrimary ? styles.primaryAdress : styles.adressB}>
           <CardItem style={styles.headerCard}>
@@ -12,7 +13,14 @@ export default function AdressCard({data, navigation}) {
               <Text style={styles.name}>Jane Doe</Text>
             </Left>
             <Right>
-              <Text style={styles.changeText}>Change</Text>
+              <TouchableOpacity
+                onPress={
+                  route.name !== 'Checkout'
+                    ? () => navigation.navigate('ChangeShippingAdress')
+                    : () => navigation.navigate('ShippingAdress')
+                }>
+                <Text style={styles.changeText}>Change</Text>
+              </TouchableOpacity>
             </Right>
           </CardItem>
           <CardItem style={styles.adressContent}>

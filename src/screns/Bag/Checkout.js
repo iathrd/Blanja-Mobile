@@ -6,15 +6,16 @@ import PaymentMethod from '../../components/PaymentMethod';
 
 const data = [{name: 'PPP', isPrimary: false}];
 
-export default function Checkout() {
+export default function Checkout({navigation, route}) {
   return (
     <View style={styles.parent}>
+      {console.log(route)}
       <View style={styles.content}>
         <View style={styles.labelShipping}>
           <Text style={styles.labelText}>Shipping address</Text>
         </View>
         <View style={styles.cardAdressWrapper}>
-          <AdressCard data={data} />
+          <AdressCard data={data} navigation={navigation} route={route} />
         </View>
         <View>
           <View style={styles.labelPayment}>
@@ -53,7 +54,11 @@ export default function Checkout() {
           </View>
         </View>
         <View style={styles.btnWrapper}>
-          <Button style={styles.btnSubmit} full rounded>
+          <Button
+            onPress={() => navigation.navigate('Success')}
+            style={styles.btnSubmit}
+            full
+            rounded>
             <Text style={styles.btnText}>SUBMIT ORDER</Text>
           </Button>
         </View>

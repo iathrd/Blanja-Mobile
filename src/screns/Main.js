@@ -10,7 +10,7 @@ import TabNavigation from './Navigation/TabNavigation';
 import ShippingAdress from './ShippingAdress';
 import Settings from './MyProfile/Settings';
 
-import {MyOrderStack, MyBagStack} from './Navigation/Navigation';
+import {MyOrderStack, MyBagStack, adressStack} from './Navigation/Navigation';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -34,7 +34,11 @@ export default function Main() {
           name="MyOrders"
           component={MyOrderStack}
         />
-        <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="ShippingAdress"
+          component={adressStack}
+        />
         <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>

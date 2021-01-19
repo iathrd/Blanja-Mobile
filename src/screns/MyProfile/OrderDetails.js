@@ -16,7 +16,7 @@ const data = [
   {id: '3', name: 'PPP', isPrimary: false},
 ];
 
-export default function OrderDetails() {
+export default function OrderDetails({navigation, route}) {
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
@@ -50,7 +50,13 @@ export default function OrderDetails() {
           <View>
             <FlatList
               data={data}
-              renderItem={({item}) => <OrderProductCard data={item} />}
+              renderItem={({item}) => (
+                <OrderProductCard
+                  data={item}
+                  route={route}
+                  navigation={navigation}
+                />
+              )}
             />
           </View>
           <View style={styles.orderInformationWrapper}>

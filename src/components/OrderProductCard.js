@@ -1,8 +1,9 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import {Card, CardItem, Left, Body, Right} from 'native-base';
+import {Card, CardItem, Left, Body, Right, Button} from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function OrderProductCard() {
+export default function OrderProductCard({data, route}) {
   return (
     <View style={styles.cardWrapper}>
       <Card style={styles.card}>
@@ -17,11 +18,22 @@ export default function OrderProductCard() {
               </View>
               <Body>
                 <View style={styles.infoWrapper}>
-                  <View>
-                    <Text style={styles.name}>Pullover</Text>
-                  </View>
-                  <View style={styles.brandWrapper}>
-                    <Text style={styles.labelText}>Mango</Text>
+                  <View style={styles.headerWrapper}>
+                    <View>
+                      <View>
+                        <Text style={styles.name}>Pullover</Text>
+                      </View>
+                      {route.name !== 'MyBag' && (
+                        <View style={styles.brandWrapper}>
+                          <Text style={styles.labelText}>Mango</Text>
+                        </View>
+                      )}
+                    </View>
+                    {route.name === 'MyBag' && (
+                      <View>
+                        <Icon name="dots-vertical" size={20} color="#9b9b9b" />
+                      </View>
+                    )}
                   </View>
                   <View style={styles.productInfoWrapper}>
                     <View style={styles.labelWrapper}>
@@ -42,14 +54,35 @@ export default function OrderProductCard() {
                     </View>
                   </View>
                   <View style={styles.priceWrapper}>
-                    <View style={styles.labelWrapper}>
-                      <View style={styles.lbWrapper}>
-                        <Text style={styles.labelText}>Units:</Text>
+                    {route.name !== 'MyBag' ? (
+                      <View style={styles.labelWrapper}>
+                        <View style={styles.lbWrapper}>
+                          <Text style={styles.labelText}>Units:</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.labelValue}>1</Text>
+                        </View>
                       </View>
-                      <View>
-                        <Text style={styles.labelValue}>1</Text>
+                    ) : (
+                      <View style={styles.labelWrapper}>
+                        <View>
+                          <Button rounded style={styles.btnCounter}>
+                            <Icon name="minus" size={23} color="#9b9b9b" />
+                          </Button>
+                        </View>
+                        <View style={styles.numberWrapper}>
+                          <View>
+                            <Text>1</Text>
+                          </View>
+                        </View>
+                        <View>
+                          <Button rounded style={styles.btnCounter}>
+                            <Icon name="plus" size={23} color="#9b9b9b" />
+                          </Button>
+                        </View>
                       </View>
-                    </View>
+                    )}
+
                     <View>
                       <Text style={styles.price}>51$</Text>
                     </View>
@@ -142,5 +175,22 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: 'bold',
     color: '#222222',
+  },
+  headerWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  btnCounter: {
+    paddingTop: 14,
+    paddingLeft: 11,
+    paddingRight: 11,
+    paddingBottom: 16,
+    backgroundColor: '#FFFFFF',
+  },
+  numberWrapper: {
+    width: 30,
+    textAlign: 'center',
+    position: 'relative',
+    paddingLeft: 10,
   },
 });

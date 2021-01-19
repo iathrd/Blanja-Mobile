@@ -7,9 +7,13 @@ import {
   Switch,
   TouchableOpacity,
 } from 'react-native';
-import {Item, Input, Label, Button} from 'native-base';
+import {Item, Input, Button} from 'native-base';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
+import {Formik} from 'formik';
+import moment from 'moment';
+
+import {changePassword} from '../../helpers/formValidation';
 
 export default function Settings() {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -20,47 +24,121 @@ export default function Settings() {
   const renderInner = () => (
     <Animated.View>
       <View style={styles.shipContent}>
-        <View>
-          <View>
-            <Item style={styles.itemInput} regular>
-              <Input
-                style={styles.input}
-                placeholder="Old Password"
-                placeholderTextColor="#9b9b9b"
-              />
-            </Item>
-          </View>
-          <View style={styles.forgotTextWrapper}>
-            <Text style={styles.changeText}>Forgot Password? </Text>
-          </View>
-        </View>
-        <View style={styles.inputShipWrapper}>
-          <View>
-            <Item style={styles.itemInput} regular>
-              <Input
-                style={styles.input}
-                placeholder="New Password"
-                placeholderTextColor="#9b9b9b"
-              />
-            </Item>
-          </View>
-        </View>
-        <View style={styles.inputShipWrapper}>
-          <View>
-            <Item style={styles.itemInput} regular>
-              <Input
-                style={styles.input}
-                placeholder="Repeat New Password"
-                placeholderTextColor="#9b9b9b"
-              />
-            </Item>
-          </View>
-        </View>
-        <View style={styles.btnSaveWrapper}>
-          <Button style={styles.btnSave} full rounded>
-            <Text style={styles.textSave}>SAVE PASSWORD</Text>
-          </Button>
-        </View>
+        <Formik
+          initialValues={{
+            oldPassword: '',
+            newPassword: '',
+            repeatPassword: '',
+          }}
+          validationSchema={changePassword}
+          onSubmit={(values) => console.log(values)}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <>
+              <View>
+                <View>
+                  <Item
+                    style={
+                      errors.oldPassword && touched.oldPassword
+                        ? styles.itemInputError
+                        : styles.itemInput
+                    }
+                    regular>
+                    <Input
+                      style={styles.input}
+                      placeholder="Old Password"
+                      placeholderTextColor="#9b9b9b"
+                      name="oldPassword"
+                      value={values.oldPassword}
+                      onChangeText={handleChange('oldPassword')}
+                      onBlur={handleBlur('oldPassword')}
+                      secureTextEntry
+                    />
+                  </Item>
+                  <View style={styles.errorWrapper}>
+                    {errors.oldPassword && touched.oldPassword && (
+                      <Text style={styles.errorText}>{errors.oldPassword}</Text>
+                    )}
+                  </View>
+                </View>
+                <View style={styles.forgotTextWrapper}>
+                  <Text style={styles.changeText}>Forgot Password? </Text>
+                </View>
+              </View>
+              <View style={styles.inputShipWrapper}>
+                <View>
+                  <Item
+                    style={
+                      errors.newPassword && touched.newPassword
+                        ? styles.itemInputError
+                        : styles.itemInput
+                    }
+                    regular>
+                    <Input
+                      style={styles.input}
+                      placeholder="New Password"
+                      placeholderTextColor="#9b9b9b"
+                      name="newPassword"
+                      value={values.newPassword}
+                      onChangeText={handleChange('newPassword')}
+                      onBlur={handleBlur('newPassword')}
+                      secureTextEntry
+                    />
+                  </Item>
+                </View>
+                <View style={styles.errorWrapper}>
+                  {errors.newPassword && touched.newPassword && (
+                    <Text style={styles.errorText}>{errors.newPassword}</Text>
+                  )}
+                </View>
+              </View>
+              <View style={styles.inputShipWrapper}>
+                <View>
+                  <Item
+                    style={
+                      errors.repeatPassword && touched.repeatPassword
+                        ? styles.itemInputError
+                        : styles.itemInput
+                    }
+                    regular>
+                    <Input
+                      style={styles.input}
+                      placeholder="Repeat New Password"
+                      placeholderTextColor="#9b9b9b"
+                      name="repeatPassword"
+                      value={values.repeatPassword}
+                      onChangeText={handleChange('repeatPassword')}
+                      onBlur={handleBlur('repeatPassword')}
+                      secureTextEntry
+                    />
+                  </Item>
+                </View>
+                <View style={styles.errorWrapper}>
+                  {errors.repeatPassword && touched.repeatPassword && (
+                    <Text style={styles.errorText}>
+                      {errors.repeatPassword}
+                    </Text>
+                  )}
+                </View>
+              </View>
+              <View style={styles.btnSaveWrapper}>
+                <Button
+                  onPress={handleSubmit}
+                  style={styles.btnSave}
+                  full
+                  rounded>
+                  <Text style={styles.textSave}>SAVE PASSWORD</Text>
+                </Button>
+              </View>
+            </>
+          )}
+        </Formik>
       </View>
     </Animated.View>
   );
@@ -94,24 +172,51 @@ export default function Settings() {
             <View style={styles.labelInfoWrapper}>
               <Text style={styles.infoLabel}>Personal Information</Text>
             </View>
-            <View style={styles.inputWrapper}>
-              <Item style={styles.itemInput} regular>
-                <Input
-                  style={styles.input}
-                  placeholderTextColor="#9b9b9b"
-                  placeholder="Full name"
-                />
-              </Item>
-            </View>
-            <View>
-              <Item style={styles.itemInput} regular>
-                <Input
-                  style={styles.input}
-                  placeholderTextColor="#9b9b9b"
-                  placeholder="Date of Birth"
-                />
-              </Item>
-            </View>
+            <Formik
+              initialValues={{
+                username: 'Iqbal Athorid',
+                dateOfBirth: moment().format('DD/MM/YYYY'),
+              }}
+              onSubmit={(values) => console.log(values)}>
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+              }) => (
+                <>
+                  <View style={styles.inputWrapper}>
+                    <Item style={styles.itemInput} regular>
+                      <Input
+                        style={styles.input}
+                        placeholderTextColor="#9b9b9b"
+                        placeholder="Full name"
+                        name="username"
+                        value={values.username}
+                        onChangeText={handleChange('username')}
+                        onBlur={handleBlur('username')}
+                      />
+                    </Item>
+                  </View>
+                  <View>
+                    <Item style={styles.itemInput} regular>
+                      <Input
+                        style={styles.input}
+                        placeholderTextColor="#9b9b9b"
+                        placeholder="Date of Birth"
+                        name="dateOfBirth"
+                        value={values.dateOfBirth}
+                        onChangeText={handleChange('dateOfBirth')}
+                        onBlur={handleBlur('dateOfBirth')}
+                      />
+                    </Item>
+                  </View>
+                </>
+              )}
+            </Formik>
+
             <View style={styles.changePasswordWrapper}>
               <View style={styles.changeLabelWrapper}>
                 <View>
@@ -291,7 +396,7 @@ const styles = StyleSheet.create({
   },
   forgotTextWrapper: {
     alignSelf: 'flex-end',
-    marginTop: 14,
+    marginTop: 4,
     marginBottom: 18,
   },
   itemInput: {
@@ -299,8 +404,13 @@ const styles = StyleSheet.create({
     borderColor: '#FFFFFF',
     borderRadius: 4,
   },
+  itemInputError: {
+    backgroundColor: '#FFFFFF',
+    borderColor: 'red',
+    borderRadius: 4,
+  },
   inputShipWrapper: {
-    marginBottom: 24,
+    marginBottom: 14,
   },
   btnSave: {
     backgroundColor: '#DB3022',
@@ -316,5 +426,14 @@ const styles = StyleSheet.create({
   },
   btnSaveWrapper: {
     marginTop: 8,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    paddingTop: 3,
+    marginLeft: 5,
+  },
+  errorWrapper: {
+    height: 10,
   },
 });

@@ -51,14 +51,26 @@ export function MyOrderStack() {
 
 export function adressStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleStyle: {fontSize: 18, lineHeight: 22, color: '#222222'},
+        headerTitleAlign: 'center',
+      }}>
       <Stack.Screen
-        options={{title: 'Change adress', headerTitleAlign: 'center'}}
+        options={{title: 'Shipping address'}}
+        name="ShippingAdress"
+        component={ShippingAdress}
+      />
+      <Stack.Screen
+        options={{title: 'Change adress'}}
         name="ChangeShippingAdress"
         component={ChangeShippingAdress}
       />
-      <Stack.Screen name="AddShippingAdress" component={AddShippingAdress} />
+      <Stack.Screen
+        options={{title: 'Adding Shipping Address'}}
+        name="AddShippingAdress"
+        component={AddShippingAdress}
+      />
     </Stack.Navigator>
   );
 }

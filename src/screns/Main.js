@@ -8,6 +8,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import TabNavigation from './Navigation/TabNavigation';
 import ShippingAdress from './ShippingAdress';
+import Settings from './MyProfile/Settings';
 import {MyOrderStack} from './Navigation/Navigation';
 
 const Tab = createBottomTabNavigator();
@@ -28,6 +29,7 @@ export default function Main() {
           component={MyOrderStack}
         />
         <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );

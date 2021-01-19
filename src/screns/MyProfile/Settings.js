@@ -7,7 +7,7 @@ import {
   Switch,
   TouchableOpacity,
 } from 'react-native';
-import {Item, Input, Label} from 'native-base';
+import {Item, Input, Label, Button} from 'native-base';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -18,19 +18,59 @@ export default function Settings() {
   const fall = new Animated.Value(1);
 
   const renderInner = () => (
-    <View
-      style={{
-        backgroundColor: 'white',
-        padding: 16,
-        height: 450,
-      }}>
-      <Text>Swipe down to close</Text>
-    </View>
+    <Animated.View>
+      <View style={styles.shipContent}>
+        <View>
+          <View>
+            <Item style={styles.itemInput} regular>
+              <Input
+                style={styles.input}
+                placeholder="Old Password"
+                placeholderTextColor="#9b9b9b"
+              />
+            </Item>
+          </View>
+          <View style={styles.forgotTextWrapper}>
+            <Text style={styles.changeText}>Forgot Password? </Text>
+          </View>
+        </View>
+        <View style={styles.inputShipWrapper}>
+          <View>
+            <Item style={styles.itemInput} regular>
+              <Input
+                style={styles.input}
+                placeholder="New Password"
+                placeholderTextColor="#9b9b9b"
+              />
+            </Item>
+          </View>
+        </View>
+        <View style={styles.inputShipWrapper}>
+          <View>
+            <Item style={styles.itemInput} regular>
+              <Input
+                style={styles.input}
+                placeholder="Repeat New Password"
+                placeholderTextColor="#9b9b9b"
+              />
+            </Item>
+          </View>
+        </View>
+        <View style={styles.btnSaveWrapper}>
+          <Button style={styles.btnSave} full rounded>
+            <Text style={styles.textSave}>SAVE PASSWORD</Text>
+          </Button>
+        </View>
+      </View>
+    </Animated.View>
   );
 
   const renderHeader = () => (
-    <View>
-      <Text>PPPP</Text>
+    <View style={styles.headerWrapper}>
+      <View style={styles.tab}></View>
+      <View style={styles.labelShipWrapper}>
+        <Text style={styles.labelShip}>Password Change</Text>
+      </View>
     </View>
   );
 
@@ -38,7 +78,7 @@ export default function Settings() {
     <>
       <BottomSheet
         ref={bs}
-        snapPoints={[500, 0]}
+        snapPoints={[400, 0]}
         initialSnap={1}
         renderContent={renderInner}
         renderHeader={renderHeader}
@@ -56,12 +96,20 @@ export default function Settings() {
             </View>
             <View style={styles.inputWrapper}>
               <Item style={styles.itemInput} regular>
-                <Input placeholder="Full name" />
+                <Input
+                  style={styles.input}
+                  placeholderTextColor="#9b9b9b"
+                  placeholder="Full name"
+                />
               </Item>
             </View>
             <View>
               <Item style={styles.itemInput} regular>
-                <Input placeholder="Date of Birth" />
+                <Input
+                  style={styles.input}
+                  placeholderTextColor="#9b9b9b"
+                  placeholder="Date of Birth"
+                />
               </Item>
             </View>
             <View style={styles.changePasswordWrapper}>
@@ -78,6 +126,8 @@ export default function Settings() {
               <View>
                 <Item style={styles.itemInput} regular>
                   <Input
+                    style={styles.input}
+                    placeholderTextColor="#9b9b9b"
                     disabled
                     value={'12312314194'}
                     placeholder="Password"
@@ -210,7 +260,61 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: '#222222',
   },
+  headerWrapper: {
+    backgroundColor: '#F9F9F9',
+    paddingTop: 14,
+    borderTopLeftRadius: 34,
+    borderTopRightRadius: 34,
+    alignItems: 'center',
+  },
+  tab: {
+    width: 60,
+    height: 6,
+    backgroundColor: '#9B9B9B',
+    borderRadius: 3,
+  },
+  labelShipWrapper: {
+    marginTop: 16,
+    marginBottom: 18,
+  },
+  labelShip: {
+    fontSize: 18,
+    lineHeight: 20,
+    fontWeight: 'bold',
+    color: '#222222',
+  },
+  shipContent: {
+    backgroundColor: '#F9F9F9',
+    paddingLeft: 16,
+    paddingRight: 16,
+    height: 450,
+  },
+  forgotTextWrapper: {
+    alignSelf: 'flex-end',
+    marginTop: 14,
+    marginBottom: 18,
+  },
   itemInput: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#FFFFFF',
     borderRadius: 4,
+  },
+  inputShipWrapper: {
+    marginBottom: 24,
+  },
+  btnSave: {
+    backgroundColor: '#DB3022',
+  },
+  textSave: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#FFFFFF',
+  },
+  input: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  btnSaveWrapper: {
+    marginTop: 8,
   },
 });

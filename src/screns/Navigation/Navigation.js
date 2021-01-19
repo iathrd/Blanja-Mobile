@@ -8,6 +8,24 @@ const Stack = createStackNavigator();
 import MyProfile from '../MyProfile/MyProfile';
 import MyOrders from '../MyProfile/MyOrders';
 import OrderDetails from '../MyProfile/OrderDetails';
+import MyBag from '../Bag/MyBag';
+import Checkout from '../Bag/Checkout';
+
+export function MyBags() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="MyBag" component={MyBag} />
+    </Stack.Navigator>
+  );
+}
+
+export function MyBagStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Checkout" component={Checkout} />
+    </Stack.Navigator>
+  );
+}
 
 export function MyProfiles() {
   return (

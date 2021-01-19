@@ -5,7 +5,7 @@ import Icon2 from 'react-native-vector-icons/Fontisto';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 //stackScreens
-import {MyProfiles} from './Navigation';
+import {MyProfiles, MyBags} from './Navigation';
 
 //screens
 import Home from '../Home/Home';
@@ -44,8 +44,8 @@ export default function TabNavigation() {
             <Icon2 name="shopping-bag" size={size} color={color} />
           ),
         }}
-        name="Bag"
-        component={Home}
+        name="MyBugs"
+        component={MyBags}
       />
       <Tab.Screen
         options={{

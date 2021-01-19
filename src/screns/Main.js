@@ -9,7 +9,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import TabNavigation from './Navigation/TabNavigation';
 import ShippingAdress from './ShippingAdress';
 import Settings from './MyProfile/Settings';
-import {MyOrderStack} from './Navigation/Navigation';
+
+import {MyOrderStack, MyBagStack} from './Navigation/Navigation';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -22,6 +23,11 @@ export default function Main() {
           options={{headerShown: false}}
           name="Main"
           component={TabNavigation}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="MyBags"
+          component={MyBagStack}
         />
         <Stack.Screen
           options={{headerShown: false}}

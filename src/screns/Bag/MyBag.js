@@ -38,7 +38,11 @@ export default function MyBag({route, navigation}) {
           </View>
         </View>
         <View style={styles.btnWrapper}>
-          <Button style={styles.btnCheck} full rounded>
+          <Button
+            onPress={() => navigation.navigate('Checkout')}
+            style={styles.btnCheck}
+            full
+            rounded>
             <Text style={styles.btnText}>CHECK OUT</Text>
           </Button>
         </View>

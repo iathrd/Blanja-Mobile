@@ -26,7 +26,7 @@ export default function Main() {
         />
         <Stack.Screen
           options={{headerShown: false}}
-          name="MyBags"
+          name="Checkout"
           component={MyBagStack}
         />
         <Stack.Screen

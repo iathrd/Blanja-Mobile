@@ -27,7 +27,11 @@ export function MyBagStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Checkout" component={Checkout} />
-      <Stack.Screen name="Success" component={Success} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Success"
+        component={Success}
+      />
     </Stack.Navigator>
   );
 }

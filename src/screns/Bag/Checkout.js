@@ -55,7 +55,12 @@ export default function Checkout({navigation, route}) {
         </View>
         <View style={styles.btnWrapper}>
           <Button
-            onPress={() => navigation.navigate('Success')}
+            onPress={() =>
+              navigation.reset({
+                index: 0,
+                routes: [{name: 'Success'}],
+              })
+            }
             style={styles.btnSubmit}
             full
             rounded>

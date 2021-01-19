@@ -5,7 +5,6 @@ import {Card, CardItem, Left, Right, Body} from 'native-base';
 export default function AdressCard({data, navigation, route}) {
   return (
     <View style={styles.cardWrapper}>
-      {console.log(route)}
       <Card style={styles.card}>
         <View style={data.isPrimary ? styles.primaryAdress : styles.adressB}>
           <CardItem style={styles.headerCard}>

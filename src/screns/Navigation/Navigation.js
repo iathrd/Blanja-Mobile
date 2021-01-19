@@ -54,6 +54,7 @@ export function adressStack() {
     <Stack.Navigator>
       <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
       <Stack.Screen
+        options={{title: 'Change adress', headerTitleAlign: 'center'}}
         name="ChangeShippingAdress"
         component={ChangeShippingAdress}
       />

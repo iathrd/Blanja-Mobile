@@ -15,6 +15,10 @@ import ShippingAdress from '../ShippingAdress';
 import AddShippingAdress from '../AddShippingAdress';
 import ChangeShippingAdress from '../ChangeShippingAdress';
 import Home from '../Home/Home';
+import Shop from '../Shop/Categories';
+
+//tab navigation
+import {MainTab} from '../Navigation/TopNavigation';
 
 export function Homes() {
   return (
@@ -23,6 +27,18 @@ export function Homes() {
         options={{headerShown: false}}
         name="Home"
         component={Home}
+      />
+    </Stack.Navigator>
+  );
+}
+
+export function Shops() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{headerStyle: {elevation: 0}}}
+        name="Shop"
+        component={MainTab}
       />
     </Stack.Navigator>
   );

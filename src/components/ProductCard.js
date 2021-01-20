@@ -2,36 +2,38 @@ import React from 'react';
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import Rating from '../components/Rating';
 
-export default function ProductCard() {
+export default function ProductCard({display = 'flex'}) {
   return (
-    <View style={styles.cardWrapper}>
-      <View>
-        <ImageBackground
-          style={styles.image}
-          imageStyle={styles.imgStyles}
-          source={require('../../assets/model.jpg')}>
-          <View>
-            <View style={styles.productInfo}>
-              <Text style={styles.textInfo}>NEW</Text>
+    <View style={display === 'grid' && styles.grid}>
+      <View style={styles.cardWrapper}>
+        <View>
+          <ImageBackground
+            style={styles.image}
+            imageStyle={styles.imgStyles}
+            source={require('../../assets/model.jpg')}>
+            <View>
+              <View style={styles.productInfo}>
+                <Text style={styles.textInfo}>NEW</Text>
+              </View>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={styles.cardBody}>
+          <View style={styles.ratingWrapper}>
+            <Rating />
+            <View style={styles.countWrapper}>
+              <Text style={styles.ratingCount}>(0)</Text>
             </View>
           </View>
-        </ImageBackground>
-      </View>
-      <View style={styles.cardBody}>
-        <View style={styles.ratingWrapper}>
-          <Rating />
-          <View style={styles.countWrapper}>
-            <Text style={styles.ratingCount}>(0)</Text>
+          <View>
+            <Text style={styles.brand}>OVS</Text>
           </View>
-        </View>
-        <View>
-          <Text style={styles.brand}>OVS</Text>
-        </View>
-        <View style={styles.nameWrapper}>
-          <Text style={styles.name}>Blouse</Text>
-        </View>
-        <View>
-          <Text style={styles.price}>30$</Text>
+          <View style={styles.nameWrapper}>
+            <Text style={styles.name}>Blouse</Text>
+          </View>
+          <View>
+            <Text style={styles.price}>30$</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -49,6 +51,7 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     marginRight: 17,
+    marginBottom: 10,
   },
   imgStyles: {
     borderRadius: 12,
@@ -99,5 +102,9 @@ const styles = StyleSheet.create({
   },
   nameWrapper: {
     marginTop: 5,
+  },
+  grid: {
+    paddingTop: 18,
+    paddingLeft: 16,
   },
 });

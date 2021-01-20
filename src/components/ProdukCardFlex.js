@@ -44,7 +44,7 @@ export default function ProdukCardFlex() {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
-    marginBottom: 26,
+    marginBottom: 10,
     borderRadius: 8,
   },
   cardBody: {
@@ -97,5 +97,6 @@ const styles = StyleSheet.create({
   cardView: {
     paddingLeft: 16,
     paddingRight: 16,
+    paddingTop: 16,
   },
 });

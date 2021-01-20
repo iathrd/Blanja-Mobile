@@ -1,8 +1,16 @@
-import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Fontisto';
 import ProductCardFlex from '../../components/ProdukCardFlex';
+import ProductCard from '../../components/ProductCard';
 
 const data = [
   {id: '1', name: 'PPP', isPrimary: true},
@@ -16,12 +24,16 @@ const data = [
 ];
 
 export default function Catalog() {
+  const [filter, setFilter] = useState({display: 'flex'});
+
   return (
     <View style={styles.parent}>
       <View style={styles.header}>
-        <View style={styles.labelWrapper}>
-          <Text style={styles.label}>Women’s tops</Text>
-        </View>
+        {filter.display === 'flex' && (
+          <View style={styles.labelWrapper}>
+            <Text style={styles.label}>Women’s tops</Text>
+          </View>
+        )}
         <View style={styles.filterWrapper}>
           <View style={styles.filter}>
             <View style={styles.iconWrapper}>
@@ -40,18 +52,40 @@ export default function Catalog() {
             </View>
           </View>
           <View style={styles.filter}>
-            <View style={styles.iconWrapper}>
-              <Icon name="view-grid" size={20} />
-            </View>
+            {filter.display === 'flex' ? (
+              <TouchableOpacity onPress={() => setFilter({display: 'Grid'})}>
+                <View style={styles.iconWrapper}>
+                  <Icon name="view-grid" size={20} />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => setFilter({display: 'flex'})}>
+                <View style={styles.iconWrapper}>
+                  <Icon name="view-list" size={20} />
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
       <SafeAreaView style={{flex: 1}}>
         <View style={styles.content}>
-          <FlatList
-            data={data}
-            renderItem={({item}) => <ProductCardFlex data={item} />}
-          />
+          {filter.display === 'flex' ? (
+            <FlatList
+              data={data}
+              renderItem={({item}) => <ProductCardFlex data={item} />}
+            />
+          ) : (
+            <View style={{flexDirection: 'row'}}>
+              <FlatList
+                data={data}
+                numColumns={2}
+                renderItem={({item}) => (
+                  <ProductCard data={item} display="grid" />
+                )}
+              />
+            </View>
+          )}
         </View>
       </SafeAreaView>
     </View>
@@ -86,7 +120,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'rgba(155,155,155,0.1)',
-    marginBottom: 16,
   },
   filter: {
     flexDirection: 'row',

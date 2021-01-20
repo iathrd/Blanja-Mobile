@@ -1,47 +1,68 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  TouchableHighlight,
+} from 'react-native';
 import CategoryCard from '../../components/CategoryCard';
 
 const data = [
   {id: '1', name: 'pppp'},
   {id: '2', name: 'pppp'},
   {id: '3', name: 'pppp'},
+  {id: '4', name: 'pppp'},
+  {id: '5', name: 'pppp'},
+  {id: '6', name: 'pppp'},
 ];
 
-export default function Women() {
+export default function Women({navigation}) {
   return (
-    <View style={styles.parent}>
-      <View style={styles.content}>
-        <View style={styles.promoWrapper}>
-          <View style={styles.promoContent}>
-            <View>
-              <Text style={styles.promoTitle}>SUMMER SALES</Text>
+    <ScrollView>
+      <View style={styles.parent}>
+        <View style={styles.content}>
+          <TouchableHighlight
+            style={styles.touch}
+            onPress={() => navigation.navigate('Catalog')}>
+            <View style={styles.promoWrapper}>
+              <View style={styles.promoContent}>
+                <View>
+                  <Text style={styles.promoTitle}>SUMMER SALES</Text>
+                </View>
+                <View>
+                  <Text style={styles.promoValue}>Up to 50% off</Text>
+                </View>
+              </View>
             </View>
-            <View>
-              <Text style={styles.promoValue}>Up to 50% off</Text>
-            </View>
-          </View>
+          </TouchableHighlight>
+          <FlatList
+            scrollEnabled={false}
+            showsVerticalScrollIndicator={false}
+            data={data}
+            renderItem={({item}) => (
+              <CategoryCard data={item} navigation={navigation} />
+            )}
+          />
         </View>
-        <FlatList
-          data={data}
-          renderItem={({item}) => <CategoryCard data={item} />}
-        />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    padding: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
   },
   parent: {
     flex: 1,
   },
   promoWrapper: {
     flexDirection: 'row',
-    marginBottom: 16,
   },
   promoContent: {
     flex: 1,
@@ -62,5 +83,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: '#FFFFFF',
+  },
+  touch: {
+    marginBottom: 16,
+    borderRadius: 8,
   },
 });

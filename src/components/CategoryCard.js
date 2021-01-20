@@ -1,32 +1,44 @@
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  TouchableHighlight,
+} from 'react-native';
 
-export default function CategoryCard() {
+export default function CategoryCard({data, navigation}) {
   return (
-    <View style={styles.card}>
-      <View>
-        <Text style={styles.categoryName}>New</Text>
+    <TouchableHighlight
+      activeOpacity={0.6}
+      underlayColor="#DDDDDD"
+      style={styles.touch}
+      onPress={() => navigation.navigate('Catalog')}>
+      <View style={styles.card}>
+        <View>
+          <Text style={styles.categoryName}>New</Text>
+        </View>
+        <View>
+          <ImageBackground
+            source={require('../../assets/New.png')}
+            style={styles.image}
+          />
+        </View>
       </View>
-      <View>
-        <ImageBackground
-          source={require('../../assets/New.png')}
-          style={styles.image}
-        />
-      </View>
-    </View>
+    </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
-    marginBottom: 16,
+
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingLeft: 23,
-    elevation:2
+    elevation: 2,
   },
   categoryName: {
     fontSize: 18,
@@ -37,5 +49,9 @@ const styles = StyleSheet.create({
     width: 171,
     height: 100,
     resizeMode: 'cover',
+  },
+  touch: {
+    marginBottom: 16,
+    borderRadius: 8,
   },
 });

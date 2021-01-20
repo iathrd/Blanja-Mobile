@@ -15,7 +15,7 @@ import ShippingAdress from '../ShippingAdress';
 import AddShippingAdress from '../AddShippingAdress';
 import ChangeShippingAdress from '../ChangeShippingAdress';
 import Home from '../Home/Home';
-import Shop from '../Shop/Categories';
+import Catalog from '../Shop/Catalog';
 
 //tab navigation
 import {MainTab} from '../Navigation/TopNavigation';
@@ -39,6 +39,11 @@ export function Shops() {
         options={{headerStyle: {elevation: 0}}}
         name="Shop"
         component={MainTab}
+      />
+      <Stack.Screen
+        options={{headerStyle: {elevation: 0}}}
+        name="Catalog"
+        component={Catalog}
       />
     </Stack.Navigator>
   );

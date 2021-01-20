@@ -14,6 +14,19 @@ import Success from '../Bag/Success';
 import ShippingAdress from '../ShippingAdress';
 import AddShippingAdress from '../AddShippingAdress';
 import ChangeShippingAdress from '../ChangeShippingAdress';
+import Home from '../Home/Home';
+
+export function Homes() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="Home"
+        component={Home}
+      />
+    </Stack.Navigator>
+  );
+}
 
 export function MyBags() {
   return (

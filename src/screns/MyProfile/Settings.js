@@ -103,6 +103,7 @@ export default function Settings() {
                   <Item
                     style={
                       errors.repeatPassword && touched.repeatPassword
+                      
                         ? styles.itemInputError
                         : styles.itemInput
                     }

@@ -11,6 +11,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Fontisto';
 import ProductCardFlex from '../../components/ProdukCardFlex';
 import ProductCard from '../../components/ProductCard';
+import Animated from 'react-native-reanimated';
+import SortBottomShip from '../../components/SortBottomShip';
 
 const data = [
   {id: '1', name: 'PPP', isPrimary: true},
@@ -25,69 +27,76 @@ const data = [
 
 export default function Catalog() {
   const [filter, setFilter] = useState({display: 'flex'});
+  const bs = React.createRef();
+  const fall = new Animated.Value(1);
 
   return (
-    <View style={styles.parent}>
-      <View style={styles.header}>
-        {filter.display === 'flex' && (
-          <View style={styles.labelWrapper}>
-            <Text style={styles.label}>Women’s tops</Text>
-          </View>
-        )}
-        <View style={styles.filterWrapper}>
-          <View style={styles.filter}>
-            <View style={styles.iconWrapper}>
-              <Icon name="filter-variant" size={25} />
-            </View>
-            <View>
-              <Text style={styles.filterLabel}>Filters</Text>
-            </View>
-          </View>
-          <View style={styles.filter}>
-            <View style={styles.iconWrapper}>
-              <Icon2 name="arrow-swap" size={20} />
-            </View>
-            <View>
-              <Text style={styles.filterLabel}>Price: lowest to high</Text>
-            </View>
-          </View>
-          <View style={styles.filter}>
-            {filter.display === 'flex' ? (
-              <TouchableOpacity onPress={() => setFilter({display: 'Grid'})}>
-                <View style={styles.iconWrapper}>
-                  <Icon name="view-grid" size={20} />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => setFilter({display: 'flex'})}>
-                <View style={styles.iconWrapper}>
-                  <Icon name="view-list" size={20} />
-                </View>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-      </View>
-      <SafeAreaView style={{flex: 1}}>
-        <View style={styles.content}>
-          {filter.display === 'flex' ? (
-            <FlatList
-              data={data}
-              renderItem={({item}) => <ProductCardFlex data={item} />}
-            />
-          ) : (
-            <View style={{flexDirection: 'row'}}>
-              <FlatList
-                data={data}
-                numColumns={2}
-                renderItem={({item}) => (
-                  <ProductCard data={item} display="grid" />
-                )}
-              />
+    <View style={{flex: 1}}>
+      <SortBottomShip bs={bs} fall={fall} />
+      <View style={styles.parent}>
+        <View style={styles.header}>
+          {filter.display === 'flex' && (
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>Women’s tops</Text>
             </View>
           )}
+          <View style={styles.filterWrapper}>
+            <View style={styles.filter}>
+              <View style={styles.iconWrapper}>
+                <Icon name="filter-variant" size={25} />
+              </View>
+              <View>
+                <Text style={styles.filterLabel}>Filters</Text>
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+              <View style={styles.filter}>
+                <View style={styles.iconWrapper}>
+                  <Icon2 name="arrow-swap" size={20} />
+                </View>
+                <View>
+                  <Text style={styles.filterLabel}>Price: lowest to high</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.filter}>
+              {filter.display === 'flex' ? (
+                <TouchableOpacity onPress={() => setFilter({display: 'Grid'})}>
+                  <View style={styles.iconWrapper}>
+                    <Icon name="view-grid" size={20} />
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => setFilter({display: 'flex'})}>
+                  <View style={styles.iconWrapper}>
+                    <Icon name="view-list" size={20} />
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
         </View>
-      </SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={styles.content}>
+            {filter.display === 'flex' ? (
+              <FlatList
+                data={data}
+                renderItem={({item}) => <ProductCardFlex data={item} />}
+              />
+            ) : (
+              <View style={{flexDirection: 'row'}}>
+                <FlatList
+                  data={data}
+                  numColumns={2}
+                  renderItem={({item}) => (
+                    <ProductCard data={item} display="grid" />
+                  )}
+                />
+              </View>
+            )}
+          </View>
+        </SafeAreaView>
+      </View>
     </View>
   );
 }

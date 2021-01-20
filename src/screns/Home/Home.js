@@ -10,7 +10,7 @@ const data = [
   {id: '5', rating: 1},
 ];
 
-export default function Home() {
+export default function Home({navigation}) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.parent}>
@@ -38,7 +38,9 @@ export default function Home() {
               <FlatList
                 horizontal
                 data={data}
-                renderItem={({item}) => <ProductCard data={item} />}
+                renderItem={({item}) => (
+                  <ProductCard data={item} navigation={navigation} />
+                )}
               />
             </View>
           </View>
@@ -62,7 +64,9 @@ export default function Home() {
               <FlatList
                 horizontal
                 data={data}
-                renderItem={({item}) => <ProductCard data={item} />}
+                renderItem={({item}) => (
+                  <ProductCard data={item} navigation={navigation} />
+                )}
               />
             </View>
           </View>

@@ -1,40 +1,54 @@
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  TouchableHighlight,
+} from 'react-native';
 import Rating from '../components/Rating';
 
-export default function ProductCard({display = 'flex'}) {
+export default function ProductCard({display = 'flex', navigation}) {
   return (
     <View style={display === 'grid' && styles.grid}>
       <View style={styles.cardWrapper}>
-        <View>
-          <ImageBackground
-            style={styles.image}
-            imageStyle={styles.imgStyles}
-            source={require('../../assets/model.jpg')}>
+        <TouchableHighlight
+          style={styles.touch}
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          onPress={() => navigation.navigate('ProductDetails')}>
+          <View>
             <View>
-              <View style={styles.productInfo}>
-                <Text style={styles.textInfo}>NEW</Text>
+              <ImageBackground
+                style={styles.image}
+                imageStyle={styles.imgStyles}
+                source={require('../../assets/model.jpg')}>
+                <View>
+                  <View style={styles.productInfo}>
+                    <Text style={styles.textInfo}>NEW</Text>
+                  </View>
+                </View>
+              </ImageBackground>
+            </View>
+            <View style={styles.cardBody}>
+              <View style={styles.ratingWrapper}>
+                <Rating />
+                <View style={styles.countWrapper}>
+                  <Text style={styles.ratingCount}>(0)</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.brand}>OVS</Text>
+              </View>
+              <View style={styles.nameWrapper}>
+                <Text style={styles.name}>Blouse</Text>
+              </View>
+              <View>
+                <Text style={styles.price}>30$</Text>
               </View>
             </View>
-          </ImageBackground>
-        </View>
-        <View style={styles.cardBody}>
-          <View style={styles.ratingWrapper}>
-            <Rating />
-            <View style={styles.countWrapper}>
-              <Text style={styles.ratingCount}>(0)</Text>
-            </View>
           </View>
-          <View>
-            <Text style={styles.brand}>OVS</Text>
-          </View>
-          <View style={styles.nameWrapper}>
-            <Text style={styles.name}>Blouse</Text>
-          </View>
-          <View>
-            <Text style={styles.price}>30$</Text>
-          </View>
-        </View>
+        </TouchableHighlight>
       </View>
     </View>
   );
@@ -106,5 +120,8 @@ const styles = StyleSheet.create({
   grid: {
     paddingTop: 18,
     paddingLeft: 16,
+  },
+  touch: {
+    borderRadius: 12,
   },
 });

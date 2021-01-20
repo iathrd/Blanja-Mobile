@@ -1,41 +1,53 @@
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  TouchableHighlight,
+} from 'react-native';
 import Rating from '../components/Rating';
 
-export default function ProdukCardFlex() {
+export default function ProdukCardFlex({navigation}) {
   return (
     <View style={styles.cardView}>
       <View style={styles.card}>
-        <View style={styles.cardBody}>
-          <View>
-            <ImageBackground
-              imageStyle={styles.imagest}
-              source={require('../../assets/model.jpg')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.body}>
-            <View style={styles.productWrapper}>
-              <View>
-                <Text style={styles.name}>Pullover</Text>
-              </View>
-              <View>
-                <Text style={styles.brand}>Mango</Text>
-              </View>
-            </View>
-            <View style={styles.ratingWrapper}>
-              <View style={styles.rating}>
-                <Rating value={3} />
-              </View>
-              <View>
-                <Text style={styles.ratingCount}>(3)</Text>
-              </View>
-            </View>
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          style={styles.touch}
+          onPress={() => navigation.navigate('ProductDetails')}>
+          <View style={styles.cardBody}>
             <View>
-              <Text style={styles.price}>51$</Text>
+              <ImageBackground
+                imageStyle={styles.imagest}
+                source={require('../../assets/model.jpg')}
+                style={styles.image}
+              />
+            </View>
+            <View style={styles.body}>
+              <View style={styles.productWrapper}>
+                <View>
+                  <Text style={styles.name}>Pullover</Text>
+                </View>
+                <View>
+                  <Text style={styles.brand}>Mango</Text>
+                </View>
+              </View>
+              <View style={styles.ratingWrapper}>
+                <View style={styles.rating}>
+                  <Rating value={3} />
+                </View>
+                <View>
+                  <Text style={styles.ratingCount}>(3)</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.price}>51$</Text>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableHighlight>
       </View>
     </View>
   );
@@ -98,5 +110,8 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 16,
+  },
+  touch: {
+    borderRadius: 8,
   },
 });

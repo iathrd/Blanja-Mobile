@@ -7,8 +7,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import TabNavigation from './Navigation/TabNavigation';
-import ShippingAdress from './ShippingAdress';
 import Settings from './MyProfile/Settings';
+import ProductDetails from './ProductDetails';
 
 import {MyOrderStack, MyBagStack, adressStack} from './Navigation/Navigation';
 
@@ -39,6 +39,7 @@ export default function Main() {
           name="ShippingAdress"
           component={adressStack}
         />
+        <Stack.Screen name="ProductDetails" component={ProductDetails} />
         <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>

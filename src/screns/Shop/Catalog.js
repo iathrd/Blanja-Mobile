@@ -25,7 +25,7 @@ const data = [
   {id: '8', name: 'PPP', isPrimary: false},
 ];
 
-export default function Catalog() {
+export default function Catalog({navigation}) {
   const [filter, setFilter] = useState({display: 'flex'});
   const bs = React.createRef();
   const fall = new Animated.Value(1);
@@ -81,7 +81,9 @@ export default function Catalog() {
             {filter.display === 'flex' ? (
               <FlatList
                 data={data}
-                renderItem={({item}) => <ProductCardFlex data={item} />}
+                renderItem={({item}) => (
+                  <ProductCardFlex data={item} navigation={navigation} />
+                )}
               />
             ) : (
               <View style={{flexDirection: 'row'}}>
@@ -89,7 +91,11 @@ export default function Catalog() {
                   data={data}
                   numColumns={2}
                   renderItem={({item}) => (
-                    <ProductCard data={item} display="grid" />
+                    <ProductCard
+                      data={item}
+                      display="grid"
+                      navigation={navigation}
+                    />
                   )}
                 />
               </View>

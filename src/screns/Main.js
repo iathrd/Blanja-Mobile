@@ -23,7 +23,7 @@ export default function Main() {
   const token = useSelector((state) => state.auth.token);
   return (
     <NavigationContainer>
-      {token.length ? (
+      {!token.length ? (
         <Stack.Navigator>
           <Stack.Screen
             options={{headerShown: false}}
@@ -31,7 +31,11 @@ export default function Main() {
             component={Landing}
           />
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen
+            options={{title: null}}
+            name="Register"
+            component={Register}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>

@@ -3,12 +3,14 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Item, Input, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Formik} from 'formik';
+import ModalLoading from '../components/ModalLoading';
 
 import {registerSchema} from '../helpers/formValidation';
 
 export default function Register({navigation}) {
   return (
     <View style={styles.content}>
+    
       <Formik
         initialValues={{username: '', email: '', password: ''}}
         validationSchema={registerSchema}

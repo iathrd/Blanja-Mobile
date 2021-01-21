@@ -24,7 +24,7 @@ export default function Home({navigation}) {
   }, []);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <ModalLoading modal={true} />
+      {user.isLoading && <ModalLoading modal={user.isLoading} />}
       <View style={styles.parent}>
         <View>
           <HomeBanner />

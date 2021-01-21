@@ -6,9 +6,9 @@ export default {
     type: 'GET_USER',
     payload: http(token).get('user/getUser'),
   }),
-  register: (data) => ({
-    type: 'REGISTER',
-    payload: http().post('auth/signup/custommer', qs.stringify(data)),
+  updateAvatar: (token, data) => ({
+    type: 'UPDATE_AVATAR',
+    payload: http(token).patch('user/updateUser/custommer', data),
   }),
   clearMessage: () => ({
     type: 'CLEAR_MESSAGE',

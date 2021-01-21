@@ -7,6 +7,7 @@ import ModalError from '../components/ModalError';
 import {useDispatch, useSelector} from 'react-redux';
 import authAction from '../redux/actions/auth';
 import {Formik} from 'formik';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -18,6 +19,16 @@ export default function Login() {
 
   const login = (values) => {
     dispatch(authAction.doLogin(values));
+  };
+
+  const openFile = () => {
+    launchImageLibrary({mediaType: 'photo'}, (response) => {
+      if (response.didCancel) {
+        console.log(cancel);
+      } else {
+        console.log(response.fileName);
+      }
+    });
   };
 
   return (
@@ -57,11 +68,12 @@ export default function Login() {
                     style={styles.input}
                     placeholder="Password"
                     placeholderTextColor="#9b9b9b"
+                    textContentType="password"
+                    secureTextEntry
                     name="password"
                     value={values.password}
                     onChangeText={handleChange('password')}
                     onBlur={handleBlur('password')}
-                    secureTextEntry
                   />
                 </Item>
               </View>

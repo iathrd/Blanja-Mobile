@@ -2,30 +2,34 @@ import React from 'react';
 import {View, Text, StyleSheet, FlatList, SafeAreaView} from 'react-native';
 import {Thumbnail} from 'native-base';
 
+import {useSelector, useDispatch} from 'react-redux';
+import {API_URL} from '@env';
+
 import ProfileList from '../../components/ProfileList';
 
-export default function MyProfile({navigation}) {
-  const list = [
-    {
-      id: '1',
-      name: 'My orders',
-      status: 'Already have 12 orders',
-      path: 'MyOrders',
-    },
-    {
-      id: '2',
-      name: 'Shipping addresses',
-      status: '3 addresses',
-      path: 'ShippingAdress',
-    },
-    {
-      id: '3',
-      name: 'Settings',
-      status: 'Notifications, password',
-      path: 'Settings',
-    },
-  ];
+const list = [
+  {
+    id: '1',
+    name: 'My orders',
+    status: 'Already have 12 orders',
+    path: 'MyOrders',
+  },
+  {
+    id: '2',
+    name: 'Shipping addresses',
+    status: '3 addresses',
+    path: 'ShippingAdress',
+  },
+  {
+    id: '3',
+    name: 'Settings',
+    status: 'Notifications, password',
+    path: 'Settings',
+  },
+];
 
+export default function MyProfile({navigation}) {
+  const user = useSelector((state) => state.user.data);
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -36,15 +40,19 @@ export default function MyProfile({navigation}) {
           <View>
             <Thumbnail
               style={styles.avatar}
-              source={require('../../../assets/default-avatar.png')}
+              source={
+                user.details.avatar !== null
+                  ? {uri: `${API_URL}${user.details.avatar}`}
+                  : require('../../../assets/default-avatar.png')
+              }
             />
           </View>
           <View style={styles.userInfoWrapper}>
             <View>
-              <Text style={styles.username}>Matilda Brown</Text>
+              <Text style={styles.username}>{user.name}</Text>
             </View>
             <View>
-              <Text style={styles.email}>matildabrown@mail.com</Text>
+              <Text style={styles.email}>{user.email}</Text>
             </View>
           </View>
         </View>

@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: true,
         isError: false,
-        isSuccess: false,
+        // isSuccess: false,
         alertMsg: '',
       };
     }
@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        isSuccess: true,
+        // isSuccess: true,
         data: action.payload.data.data,
       };
     }
@@ -31,12 +31,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isError: true,
+        // isSuccess: false,
         isLoading: false,
         alertMsg: action.payload.response.data.message,
       };
     }
 
-    case 'REGISTER_PENDING': {
+    case 'UPDATE_AVATAR_PENDING': {
       return {
         ...state,
         isLoading: true,
@@ -45,7 +46,7 @@ export default (state = initialState, action) => {
         alertMsg: 'Login ...',
       };
     }
-    case 'REGISTER_FULFILLED': {
+    case 'UPDATE_AVATAR_FULFILLED': {
       return {
         ...state,
         isLoading: false,
@@ -54,7 +55,7 @@ export default (state = initialState, action) => {
         alertMsg: action.payload.data.message,
       };
     }
-    case 'REGISTER_REJECTED': {
+    case 'UPDATE_AVATAR_REJECTED': {
       return {
         ...state,
         isError: true,

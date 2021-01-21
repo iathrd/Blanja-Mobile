@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,19 +7,35 @@ import {
   Switch,
   TouchableOpacity,
 } from 'react-native';
-import {Item, Input, Button} from 'native-base';
+import {Item, Input, Button, Thumbnail, Spinner} from 'native-base';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import {Formik} from 'formik';
 import moment from 'moment';
+import {useSelector, useDispatch} from 'react-redux';
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import ModalError from '../../components/ModalError';
+import ModalSucces from '../../components/ModalSuccess';
 
 import {changePassword} from '../../helpers/formValidation';
+import userAction from '../../redux/actions/user';
+import {API_URL} from '@env';
 
 export default function Settings() {
+  const dispatch = useDispatch();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const user = useSelector((state) => state.user.data);
+  const send = useSelector((state) => state.user);
+  const token = useSelector((state) => state.auth.token);
   const bs = React.createRef();
   const fall = new Animated.Value(1);
+
+  useEffect(() => {
+    if (send.isSuccess) {
+      dispatch(userAction.getUser(token));
+    }
+  }, [send.isSuccess]);
 
   const renderInner = () => (
     <Animated.View>
@@ -103,7 +119,6 @@ export default function Settings() {
                   <Item
                     style={
                       errors.repeatPassword && touched.repeatPassword
-                      
                         ? styles.itemInputError
                         : styles.itemInput
                     }
@@ -153,6 +168,36 @@ export default function Settings() {
     </View>
   );
 
+  const openFile = () => {
+    launchImageLibrary({mediaType: 'photo'}, (response) => {
+      if (response.didCancel) {
+        console.log('Fif cancel');
+      } else {
+        const image = new FormData();
+        image.append('avatar', {
+          uri: response.uri,
+          name: response.fileName,
+          type: response.type,
+        });
+        dispatch(userAction.updateAvatar(token, image));
+      }
+    });
+  };
+  const openCamera = () => {
+    launchCamera({saveToPhotos: true}, (response) => {
+      console.log(response.errorMessage);
+      if (response.didCancel) {
+        console.log('didCancel');
+      } else {
+        console.log(response.fileName);
+      }
+    });
+  };
+
+  const closeModal = () => {
+    dispatch(userAction.clearMessage());
+  };
+
   return (
     <>
       <BottomSheet
@@ -164,7 +209,21 @@ export default function Settings() {
         callbackNode={fall}
         enabledBottomInitialAnimation={true}
       />
-      <ScrollView>
+      {send.isSuccess && (
+        <ModalSucces
+          modal={send.isSuccess}
+          handleClose={closeModal}
+          message={send.alertMsg}
+        />
+      )}
+      {send.isError && (
+        <ModalError
+          modal={send.isError}
+          handleClose={closeModal}
+          message={send.alertMsg}
+        />
+      )}
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View style={styles.labelWrapper}>
             <Text style={styles.label}>Settings</Text>
@@ -173,10 +232,35 @@ export default function Settings() {
             <View style={styles.labelInfoWrapper}>
               <Text style={styles.infoLabel}>Personal Information</Text>
             </View>
+            <View style={styles.avatarWrapper}>
+              <View>
+                <Thumbnail
+                  large
+                  source={
+                    user.details.avatar !== null
+                      ? {uri: `${API_URL}${user.details.avatar}`}
+                      : require('../../../assets/default-avatar.png')
+                  }
+                />
+              </View>
+              <View style={styles.btnChangeWrapper}>
+                <Button
+                  onPress={() => openFile()}
+                  style={styles.btnChange}
+                  full
+                  rounded>
+                  {/* {send.isLoading ? (
+                    <Spinner color="white" size={30} />
+                  ) : ( */}
+                    <Text style={styles.textChange}>Change avatar</Text>
+                  {/* )} */}
+                </Button>
+              </View>
+            </View>
             <Formik
               initialValues={{
-                username: 'Iqbal Athorid',
-                dateOfBirth: moment().format('DD/MM/YYYY'),
+                username: user.name,
+                dateOfBirth: moment(user.createdAt).format('DD/MM/YYYY'),
               }}
               onSubmit={(values) => console.log(values)}>
               {({
@@ -436,5 +520,21 @@ const styles = StyleSheet.create({
   },
   errorWrapper: {
     height: 10,
+  },
+  avatarWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 21,
+    flex: 1,
+  },
+  btnChangeWrapper: {
+    marginLeft: 50,
+    flex: 1,
+  },
+  btnChange: {
+    backgroundColor: '#DB3022',
+  },
+  textChange: {
+    color: 'white',
   },
 });

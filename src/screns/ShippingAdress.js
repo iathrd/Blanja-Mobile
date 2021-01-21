@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import {Item, Input, Button} from 'native-base';
 import AdressCard from '../components/AdressCard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ModalLoading from '../components/ModalLoading2';
+
+import {useSelector, useDispatch} from 'react-redux';
+import adressAction from '../redux/actions/adresss';
 
 const data = [
   {id: '1', name: 'PPP', isPrimary: true},
@@ -11,8 +15,21 @@ const data = [
 ];
 
 export default function ShippingAdress({navigation, route}) {
+  const dispatch = useDispatch();
+  const adress = useSelector((state) => state.adress);
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(adressAction.getAdress(token));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <SafeAreaView style={styles.container}>
+      {adress.isLoading && <ModalLoading modal={adress.isLoading} />}
       <View style={styles.content}>
         <View style={styles.searchWrapper}>
           <Item style={styles.item} rounded>
@@ -29,12 +46,13 @@ export default function ShippingAdress({navigation, route}) {
         </View>
         <View>
           <FlatList
-            data={data}
+            data={adress.data}
             renderItem={({item}) => (
               <AdressCard data={item} navigation={navigation} route={route} />
             )}
           />
         </View>
+        {adress.data.length === 0 && <Text>You dont have adress</Text>}
         <View style={styles.btnWrapper}>
           <Button
             onPress={() => navigation.navigate('AddShippingAdress')}

@@ -2,9 +2,9 @@ import http from '../../helpers/http';
 import qs from 'querystring';
 
 export default {
-  getUser: (token) => ({
-    type: 'GET_USER',
-    payload: http(token).get('user/getUser'),
+  getAdress: (token) => ({
+    type: 'GET_ADRESS',
+    payload: http(token).get('adress/listAdress'),
   }),
   updateAvatar: (token, data) => ({
     type: 'UPDATE_AVATAR',

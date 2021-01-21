@@ -9,7 +9,7 @@ export default function ModalSucces({modal, handleClose, message}) {
       <Modal
         onBackButtonPress={handleClose}
         onBackdropPress={handleClose}
-        isVisible={true}>
+        isVisible={modal}>
         <View style={styles.modalWrapper}>
           <View style={styles.modalContent}>
             <View style={styles.modalLabelWrapper}>

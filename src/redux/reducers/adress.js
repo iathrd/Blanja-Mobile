@@ -4,34 +4,34 @@ const initialState = {
   isError: false,
   isSuccess: false,
   alertMsg: '',
-  data: {},
+  data: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_USER_PENDING': {
+    case 'GET_ADRESS_PENDING': {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        // isSuccess: false,
+        isSuccess: false,
         alertMsg: '',
       };
     }
-    case 'GET_USER_FULFILLED': {
+    case 'GET_ADRESS_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        // isSuccess: true,
+        isSuccess: true,
         data: action.payload.data.data,
       };
     }
-    case 'GET_USER_REJECTED': {
+    case 'GET_ADRESS_REJECTED': {
       return {
         ...state,
         isError: true,
-        // isSuccess: false,
+        isSuccess: false,
         isLoading: false,
         alertMsg: action.payload.response.data.message,
       };

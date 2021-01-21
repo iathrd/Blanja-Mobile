@@ -37,6 +37,11 @@ export default function Settings() {
     }
   }, [send.isSuccess]);
 
+  const changePs = (values) => {
+    const {repeatPassword, ...data} = values;
+    dispatch(userAction.changePassword(token, data));
+  };
+
   const renderInner = () => (
     <Animated.View>
       <View style={styles.shipContent}>
@@ -47,7 +52,7 @@ export default function Settings() {
             repeatPassword: '',
           }}
           validationSchema={changePassword}
-          onSubmit={(values) => console.log(values)}>
+          onSubmit={(values) => changePs(values)}>
           {({
             handleChange,
             handleBlur,
@@ -252,7 +257,7 @@ export default function Settings() {
                   {/* {send.isLoading ? (
                     <Spinner color="white" size={30} />
                   ) : ( */}
-                    <Text style={styles.textChange}>Change avatar</Text>
+                  <Text style={styles.textChange}>Change avatar</Text>
                   {/* )} */}
                 </Button>
               </View>

@@ -9,6 +9,7 @@ import {MyProfiles, MyBags, Homes, Shops} from './Navigation';
 
 //screens
 import Home from '../Home/Home';
+import Favorites from '../Favorites/Favorites';
 
 const Tab = createBottomTabNavigator();
 
@@ -54,7 +55,7 @@ export default function TabNavigation() {
           ),
         }}
         name="Favorites"
-        component={Home}
+        component={Favorites}
       />
       <Tab.Screen
         options={{

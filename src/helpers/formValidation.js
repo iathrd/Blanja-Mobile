@@ -47,3 +47,21 @@ export const createAdressSchema = Yup.object().shape({
     .max(13, 'Invalid number')
     .required('Phone number is required'),
 });
+
+export const registerSchema = Yup.object().shape({
+  username: Yup.string()
+    .trim()
+    .min(4, 'Name to sort')
+    .required('Name is required'),
+  email: Yup.string().trim().email().required('Email is required'),
+  password: Yup.string()
+    .min(8, 'Password at least 8 character')
+    .required('Password is required'),
+});
+
+export const loginSchema = Yup.object().shape({
+  email: Yup.string().trim().email().required('Input email'),
+  password: Yup.string()
+    .min(8, 'Password at least 8 character')
+    .required('Input Password'),
+});

@@ -11,6 +11,7 @@ import ProductDetails from './ProductDetails';
 import Login from './Login';
 import Register from './Register';
 import Landing from './Landing';
+import Favorites from './Favorites/Favorites';
 
 import {MyOrderStack, MyBagStack, adressStack} from './Navigation/Navigation';
 const Stack = createStackNavigator();
@@ -22,7 +23,7 @@ export default function Main() {
   const token = useSelector((state) => state.auth.token);
   return (
     <NavigationContainer>
-      {!token.length ? (
+      {token.length ? (
         <Stack.Navigator>
           <Stack.Screen
             options={{headerShown: false}}
@@ -54,6 +55,7 @@ export default function Main() {
             name="ShippingAdress"
             component={adressStack}
           />
+          <Stack.Screen name="Favorites" component={Favorites} />
           <Stack.Screen name="ProductDetails" component={ProductDetails} />
           <Stack.Screen name="Settings" component={Settings} />
         </Stack.Navigator>

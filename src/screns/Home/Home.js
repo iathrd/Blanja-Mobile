@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList, ScrollView} from 'react-native';
 import HomeBanner from '../../components/HomeBanner';
 import ProductCard from '../../components/ProductCard';
+import ModalLoading from '../../components/ModalLoading2';
+
+import {useSelector, useDispatch} from 'react-redux';
+import userAction from '../../redux/actions/user';
+
 const data = [
   {id: '1', rating: 5},
   {id: '2', rating: 4},
@@ -11,8 +16,15 @@ const data = [
 ];
 
 export default function Home({navigation}) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(userAction.getUser(token));
+  }, []);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      <ModalLoading modal={true} />
       <View style={styles.parent}>
         <View>
           <HomeBanner />

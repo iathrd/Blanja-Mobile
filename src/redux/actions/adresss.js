@@ -6,9 +6,9 @@ export default {
     type: 'GET_ADRESS',
     payload: http(token).get('adress/listAdress'),
   }),
-  updateAvatar: (token, data) => ({
-    type: 'UPDATE_AVATAR',
-    payload: http(token).patch('user/updateUser/custommer', data),
+  createAdress: (token, data) => ({
+    type: 'CREATE_ADRESS',
+    payload: http(token).post('adress/createAdress', qs.stringify(data)),
   }),
   changePassword: (token, data) => ({
     type: 'CHANGE_PASSWORD',

@@ -2,6 +2,7 @@ const initialState = {
   token: '',
   isLoading: false,
   isError: false,
+  adressSuccess: false,
   isSuccess: false,
   alertMsg: '',
   data: [],
@@ -37,29 +38,29 @@ export default (state = initialState, action) => {
       };
     }
 
-    case 'UPDATE_AVATAR_PENDING': {
+    case 'CREATE_ADRESS_PENDING': {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        isSuccess: false,
+        adressSuccess: false,
         alertMsg: 'Login ...',
       };
     }
-    case 'UPDATE_AVATAR_FULFILLED': {
+    case 'CREATE_ADRESS_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        isSuccess: true,
+        adressSuccess: true,
         alertMsg: action.payload.data.message,
       };
     }
-    case 'UPDATE_AVATAR_REJECTED': {
+    case 'CREATE_ADRESS_REJECTED': {
       return {
         ...state,
         isError: true,
-        isSuccess: false,
+        adressSuccess: false,
         isLoading: false,
         alertMsg: action.payload.response.data.message,
       };
@@ -97,6 +98,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSuccess: false,
+        adressSuccess: false,
         isError: false,
         alertMsg: '',
       };

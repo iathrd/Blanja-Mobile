@@ -5,17 +5,18 @@ import {Formik} from 'formik';
 
 import {adressSchema} from '../helpers/formValidation';
 
-export default function ChangeShippingAdress() {
+export default function ChangeShippingAdress({route}) {
+  const {data} = route.params;
   return (
     <View style={styles.content}>
       <Formik
         initialValues={{
-          saveAs: '',
-          recipient: '',
-          adress: '',
-          city: '',
-          postalCode: '',
-          phoneNumber: '',
+          saveAs: data.saveAs,
+          recipient: data.recipient,
+          adress: data.adress,
+          city: data.city,
+          postalCode: data.postalCode,
+          phoneNumber: data.phoneNumber,
         }}
         validationSchema={adressSchema}
         onSubmit={(values) => console.log(values)}>

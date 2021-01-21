@@ -37,7 +37,9 @@ export const createAdressSchema = Yup.object().shape({
     .min(20, 'Adress to sort')
     .required('Adress is required'),
   city: Yup.string().min(4, 'City to sort').required('City is required'),
-  state: Yup.string().min(4, 'State to sort').required('State is required'),
+  saveAs: Yup.string()
+    .min(4, 'Save as to sort')
+    .required('Save as is required'),
   postalCode: Yup.string()
     .min(5, 'Invalid code')
     .max(5, 'Invalid code')

@@ -9,13 +9,13 @@ export default function AdressCard({data, navigation, route}) {
         <View style={data.isPrimary ? styles.primaryAdress : styles.adressB}>
           <CardItem style={styles.headerCard}>
             <Left>
-              <Text style={styles.name}>Jane Doe</Text>
+              <Text style={styles.name}>{data.recipient}</Text>
             </Left>
             <Right>
               <TouchableOpacity
                 onPress={
                   route.name !== 'Checkout'
-                    ? () => navigation.navigate('ChangeShippingAdress')
+                    ? () => navigation.navigate('ChangeShippingAdress', {data})
                     : () => navigation.navigate('ShippingAdress')
                 }>
                 <Text style={styles.changeText}>Change</Text>
@@ -26,7 +26,7 @@ export default function AdressCard({data, navigation, route}) {
             <Body style={styles.bodyWrapper}>
               <View>
                 <Text style={styles.adress}>
-                  3 Newbridge Court Chino Hills, CA 91709, United States
+                  {(data.adress, data.postalCode, data.city)}
                 </Text>
               </View>
             </Body>

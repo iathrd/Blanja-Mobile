@@ -1,25 +1,59 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Item, Input, Label, Button} from 'native-base';
 import {Formik} from 'formik';
+import {useSelector, useDispatch} from 'react-redux';
+import ModalSucces from '../components/ModalSuccess';
+import ModalError from '../components/ModalError';
 
 import {createAdressSchema} from '../helpers/formValidation';
+import adressAction from '../redux/actions/adresss';
 
-export default function AddShippingAdress() {
+export default function AddShippingAdress({navigation}) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const adress = useSelector((state) => state.adress);
+
+  const createAdress = (values) => {
+    dispatch(adressAction.createAdress(token, values));
+  };
+
+  const closeSuccess = () => {
+    dispatch(adressAction.clearMessage());
+    navigation.goBack();
+  };
+
+  const closeError = () => {
+    dispatch(adressAction.clearMessage());
+  };
   return (
     <ScrollView>
+      {adress.adressSuccess && (
+        <ModalSucces
+          modal={adress.adressSuccess}
+          handleClose={closeSuccess}
+          message={adress.alertMsg}
+        />
+      )}
+      {adress.isError && (
+        <ModalError
+          modal={adress.isError}
+          handleClose={closeError}
+          message={adress.alertMsg}
+        />
+      )}
       <View style={styles.content}>
         <Formik
           initialValues={{
             recipient: '',
             adress: '',
             city: '',
-            state: '',
+            saveAs: '',
             postalCode: '',
             phoneNumber: '',
           }}
           validationSchema={createAdressSchema}
-          onSubmit={(values) => console.log(values)}>
+          onSubmit={(values) => createAdress(values)}>
           {({
             handleChange,
             handleBlur,
@@ -110,7 +144,7 @@ export default function AddShippingAdress() {
               <View style={styles.inputWrapper}>
                 <Item
                   style={
-                    errors.state && touched.state
+                    errors.saveAs && touched.saveAs
                       ? styles.itemInputError
                       : styles.itemInput
                   }
@@ -119,17 +153,17 @@ export default function AddShippingAdress() {
                   floatingLabel>
                   <Input
                     style={styles.input}
-                    placeholder="State/Province/Region"
+                    placeholder="Save as (ex:Home adress,Office)"
                     placeholderTextColor="#9b9b9b"
-                    name="state"
-                    value={values.state}
-                    onChangeText={handleChange('state')}
-                    onBlur={handleBlur('state')}
+                    name="saveAs"
+                    value={values.saveAs}
+                    onChangeText={handleChange('saveAs')}
+                    onBlur={handleBlur('saveAs')}
                   />
                 </Item>
                 <View style={styles.errorWrapper}>
-                  {errors.state && touched.state && (
-                    <Text style={styles.textError}>{errors.state}</Text>
+                  {errors.saveAs && touched.saveAs && (
+                    <Text style={styles.textError}>{errors.saveAs}</Text>
                   )}
                 </View>
               </View>

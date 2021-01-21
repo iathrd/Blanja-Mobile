@@ -50,6 +50,7 @@ export default function ShippingAdress({navigation, route}) {
             renderItem={({item}) => (
               <AdressCard data={item} navigation={navigation} route={route} />
             )}
+            keyExtractor={(item) => item.id.toString()}
           />
         </View>
         {adress.data.length === 0 && <Text>You dont have adress</Text>}

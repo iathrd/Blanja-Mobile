@@ -49,10 +49,7 @@ export const createAdressSchema = Yup.object().shape({
 });
 
 export const registerSchema = Yup.object().shape({
-  username: Yup.string()
-    .trim()
-    .min(4, 'Name to sort')
-    .required('Name is required'),
+  name: Yup.string().trim().min(4, 'Name to sort').required('Name is required'),
   email: Yup.string().trim().email().required('Email is required'),
   password: Yup.string()
     .min(8, 'Password at least 8 character')

@@ -1,20 +1,53 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Item, Input, Button} from 'native-base';
+import {Item, Input, Button, Spinner} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Formik} from 'formik';
-import ModalLoading from '../components/ModalLoading';
+import ModalError from '../components/ModalError';
+import ModalSucces from '../components/ModalSuccess';
 
 import {registerSchema} from '../helpers/formValidation';
 
+import {useSelector, useDispatch} from 'react-redux';
+import authAction from '../redux/actions/auth';
+
 export default function Register({navigation}) {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  const closeSuccess = () => {
+    dispatch(authAction.clearMessage());
+    navigation.navigate('Login');
+  };
+
+  const closeError = () => {
+    dispatch(authAction.clearMessage());
+  };
+
+  const registerUser = (data) => {
+    dispatch(authAction.register(data));
+  };
+
   return (
     <View style={styles.content}>
-    
+      {auth.isError && (
+        <ModalError
+          modal={auth.isError}
+          handleClose={closeError}
+          message={auth.alertMsg}
+        />
+      )}
+      {auth.isSuccess && (
+        <ModalSucces
+          modal={auth.isError}
+          handleClose={closeSuccess}
+          message={auth.alertMsg}
+        />
+      )}
       <Formik
-        initialValues={{username: '', email: '', password: ''}}
+        initialValues={{name: '', email: '', password: ''}}
         validationSchema={registerSchema}
-        onSubmit={(values) => console.log(values)}>
+        onSubmit={(values) => registerUser(values)}>
         {({
           handleBlur,
           handleChange,
@@ -31,9 +64,7 @@ export default function Register({navigation}) {
               <View style={styles.inputWrapper}>
                 <Item
                   style={
-                    errors.username && touched.username
-                      ? styles.itemError
-                      : styles.item
+                    errors.name && touched.name ? styles.itemError : styles.item
                   }
                   placeholderLabel
                   regular>
@@ -41,15 +72,15 @@ export default function Register({navigation}) {
                     style={styles.input}
                     placeholder="Name"
                     placeholderTextColor="#9b9b9b"
-                    name="username"
-                    value={values.username}
-                    onChangeText={handleChange('username')}
-                    onBlur={handleBlur('username')}
+                    name="name"
+                    value={values.name}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
                   />
                 </Item>
                 <View>
-                  {errors.username && touched.username && (
-                    <Text style={styles.textError}>{errors.username}</Text>
+                  {errors.name && touched.name && (
+                    <Text style={styles.textError}>{errors.name}</Text>
                   )}
                 </View>
               </View>
@@ -117,8 +148,17 @@ export default function Register({navigation}) {
                 </View>
               </TouchableOpacity>
               <View>
-                <Button onPress={handleSubmit} style={styles.btn} full rounded>
-                  <Text style={styles.btnText}>SIGN UP</Text>
+                <Button
+                  disabled={auth.isLoading ? true : false}
+                  onPress={handleSubmit}
+                  style={styles.btn}
+                  full
+                  rounded>
+                  {auth.isLoading ? (
+                    <Spinner color="white" size={30} />
+                  ) : (
+                    <Text style={styles.btnText}>SIGN UP</Text>
+                  )}
                 </Button>
               </View>
             </View>

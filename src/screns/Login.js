@@ -3,7 +3,17 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Item, Input, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import {useDispatch, useSelector} from 'react-redux';
+import authAction from '../redux/actions/auth';
+
 export default function Login() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  const login = (values) => {
+    dispatch(authAction.doLogin(values));
+  };
+
   return (
     <View style={styles.content}>
       <View style={styles.labelWrapper}>

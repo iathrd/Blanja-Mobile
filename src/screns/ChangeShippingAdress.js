@@ -2,13 +2,36 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Item, Input, Label, Button} from 'native-base';
 import {Formik} from 'formik';
+import ModalSucces from '../components/ModalSuccess';
 
 import {adressSchema} from '../helpers/formValidation';
+import {useSelector, useDispatch} from 'react-redux';
+import adressAction from '../redux/actions/adresss';
 
-export default function ChangeShippingAdress({route}) {
+export default function ChangeShippingAdress({route, navigation}) {
   const {data} = route.params;
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const adress = useSelector((state) => state.adress);
+
+  const changeAdress = (values) => {
+    dispatch(adressAction.changeAdress(token, values, data.id));
+  };
+
+  const closeModal = () => {
+    dispatch(adressAction.clearMessage());
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.content}>
+      {adress.adressSuccess && (
+        <ModalSucces
+          modal={adress.adressSuccess}
+          handleClose={closeModal}
+          message={adress.alertMessage}
+        />
+      )}
       <Formik
         initialValues={{
           saveAs: data.saveAs,
@@ -19,7 +42,7 @@ export default function ChangeShippingAdress({route}) {
           phoneNumber: data.phoneNumber,
         }}
         validationSchema={adressSchema}
-        onSubmit={(values) => console.log(values)}>
+        onSubmit={(values) => changeAdress(values)}>
         {({
           handleChange,
           handleBlur,

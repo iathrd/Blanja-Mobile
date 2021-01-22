@@ -1,16 +1,16 @@
 const initialState = {
-  token: '',
   isLoading: false,
   isError: false,
   adressSuccess: false,
   isSuccess: false,
   alertMsg: '',
+  deleted: false,
   data: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_ADRESS_PENDING': {
+    case 'CREATE_CART_PENDING': {
       return {
         ...state,
         isLoading: true,
@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
         alertMsg: '',
       };
     }
-    case 'GET_ADRESS_FULFILLED': {
+    case 'CREATE_CART_FULFILLED': {
       return {
         ...state,
         isLoading: false,
@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
         data: action.payload.data.data,
       };
     }
-    case 'GET_ADRESS_REJECTED': {
+    case 'CREATE_CART_REJECTED': {
       return {
         ...state,
         isError: true,
@@ -38,58 +38,58 @@ export default (state = initialState, action) => {
       };
     }
 
-    case 'CREATE_ADRESS_PENDING': {
+    case 'GET_CART_PENDING': {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        adressSuccess: false,
+
         alertMsg: 'Login ...',
       };
     }
-    case 'CREATE_ADRESS_FULFILLED': {
+    case 'GET_CART_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        adressSuccess: true,
+        data: action.payload.data.data,
         alertMsg: action.payload.data.message,
       };
     }
-    case 'CREATE_ADRESS_REJECTED': {
+    case 'GET_CART_REJECTED': {
       return {
         ...state,
         isError: true,
-        adressSuccess: false,
+
         isLoading: false,
         alertMsg: action.payload.response.data.message,
       };
     }
 
-    case 'CHANGE_ADDRESS_PENDING': {
+    case 'DELETE_CART_PENDING': {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        adressSuccess: false,
+        deleted: false,
         alertMsg: 'Login ...',
       };
     }
-    case 'CHANGE_ADDRESS_FULFILLED': {
+    case 'DELETE_CART_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        adressSuccess: true,
+        deleted: true,
         alertMsg: action.payload.data.message,
       };
     }
-    case 'CHANGE_ADDRESS_REJECTED': {
+    case 'DELETE_CART_REJECTED': {
       return {
         ...state,
         isError: true,
-        adressSuccess: false,
         isLoading: false,
+        deleted: false,
         alertMsg: action.payload.response.data.message,
       };
     }

@@ -1,16 +1,19 @@
 const initialState = {
-  token: '',
   isLoading: false,
   isError: false,
   adressSuccess: false,
   isSuccess: false,
   alertMsg: '',
-  data: [],
+  loadData: false,
+  newProduct: [],
+  popularProduct: [],
+  cataog: [],
+  pageInfo: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_ADRESS_PENDING': {
+    case 'NEW_PRODUCT_PENDING': {
       return {
         ...state,
         isLoading: true,
@@ -19,16 +22,16 @@ export default (state = initialState, action) => {
         alertMsg: '',
       };
     }
-    case 'GET_ADRESS_FULFILLED': {
+    case 'NEW_PRODUCT_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
         isSuccess: true,
-        data: action.payload.data.data,
+        newProduct: action.payload.data.data,
       };
     }
-    case 'GET_ADRESS_REJECTED': {
+    case 'NEW_PRODUCT_REJECTED': {
       return {
         ...state,
         isError: true,
@@ -38,58 +41,84 @@ export default (state = initialState, action) => {
       };
     }
 
-    case 'CREATE_ADRESS_PENDING': {
+    case 'GET_CATALOG_PENDING': {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        adressSuccess: false,
-        alertMsg: 'Login ...',
+        isSuccess: false,
+        alertMsg: '',
       };
     }
-    case 'CREATE_ADRESS_FULFILLED': {
+    case 'GET_CATALOG_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        adressSuccess: true,
-        alertMsg: action.payload.data.message,
+        isSuccess: true,
+        catalog: action.payload.data.data,
+        pageInfo: action.payload.data.pageInfo,
       };
     }
-    case 'CREATE_ADRESS_REJECTED': {
+    case 'GET_CATALOG_REJECTED': {
       return {
         ...state,
         isError: true,
-        adressSuccess: false,
+        isSuccess: false,
         isLoading: false,
         alertMsg: action.payload.response.data.message,
       };
     }
 
-    case 'CHANGE_ADDRESS_PENDING': {
+    case 'POPULAR_PRODUCT_PENDING': {
       return {
         ...state,
         isLoading: true,
         isError: false,
-        adressSuccess: false,
         alertMsg: 'Login ...',
       };
     }
-    case 'CHANGE_ADDRESS_FULFILLED': {
+    case 'POPULAR_PRODUCT_FULFILLED': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        adressSuccess: true,
+        popularProduct: action.payload.data.data,
         alertMsg: action.payload.data.message,
       };
     }
-    case 'CHANGE_ADDRESS_REJECTED': {
+    case 'POPULAR_PRODUCT_REJECTED': {
       return {
         ...state,
         isError: true,
-        adressSuccess: false,
         isLoading: false,
+        alertMsg: action.payload.response.data.message,
+      };
+    }
+
+    case 'LOAD_DATA_PENDING': {
+      return {
+        ...state,
+        isError: false,
+        loadData: true,
+        alertMsg: '',
+      };
+    }
+    case 'LOAD_DATA_FULFILLED': {
+      return {
+        ...state,
+        isError: false,
+        loadData: false,
+        catalog: [...state.catalog, ...action.payload.data.data],
+        pageInfo: {...action.payload.data.pageInfo},
+        alertMsg: action.payload.data.message,
+      };
+    }
+    case 'LOAD_DATA_REJECTED': {
+      return {
+        ...state,
+        isError: true,
+        loadData: false,
         alertMsg: action.payload.response.data.message,
       };
     }

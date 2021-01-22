@@ -6,16 +6,51 @@ import {Button} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Rating from '../components/Rating';
+import ModalSucces from '../components/ModalSuccess';
+import ModalError from '../components/ModalError';
+import ModalLoading from '../components/ModalLoading2';
 
-export default function ProductDetails() {
-  const [images, setImage] = useState([
-    'https://source.unsplash.com/1024x768/?nature',
-    'https://source.unsplash.com/1024x768/?water',
-    'https://source.unsplash.com/1024x768/?girl',
-    'https://source.unsplash.com/1024x768/?tree', // Network image
-  ]);
+import {useSelector, useDispatch} from 'react-redux';
+import cartAction from '../redux/actions/cart';
+
+export default function ProductDetails({route, navigation}) {
+  const {data, images} = route.params;
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.user.data);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const addCart = () => {
+    dispatch(
+      cartAction.createCart(token, {
+        productId: data.id,
+        userId: user.id,
+        total: 1,
+      }),
+    );
+  };
+
+  const closeModal = () => {
+    dispatch(cartAction.clearMessage());
+  };
+
   return (
     <View style={{flex: 1}}>
+      {cart.isLoading && <ModalLoading modal={true} />}
+      {cart.isError && (
+        <ModalError
+          modal={cart.isError}
+          handleClose={closeModal}
+          message={cart.alertMsg}
+        />
+      )}
+      {cart.isSuccess && (
+        <ModalSucces
+          modal={cart.isSuccess}
+          handleClose={closeModal}
+          message={cart.alertMsg}
+        />
+      )}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <SliderBox
@@ -30,7 +65,7 @@ export default function ProductDetails() {
             paginationBoxStyle={styles.pagination}
             dotStyle={styles.dot}
             ImageComponentStyle={styles.image}
-            imageLoadingColor="#2196F3"
+            imageLoadingColor="#DB3022"
           />
           <View style={styles.body}>
             <View style={styles.sizeWrapper}>
@@ -44,7 +79,7 @@ export default function ProductDetails() {
               </View>
               <View style={styles.sizeWr}>
                 <View>
-                  <Text style={styles.size}>Black</Text>
+                  <Text style={styles.size}>{data.color}</Text>
                 </View>
                 <View>
                   <Icon name="keyboard-arrow-down" size={20} />
@@ -60,14 +95,14 @@ export default function ProductDetails() {
               <View style={styles.brandWrapper}>
                 <View>
                   <View>
-                    <Text style={styles.name}>H&M</Text>
+                    <Text style={styles.name}>{data.brand}</Text>
                   </View>
                   <View>
-                    <Text style={styles.brand}>Short black dress</Text>
+                    <Text style={styles.brand}>{data.name}</Text>
                   </View>
                 </View>
                 <View>
-                  <Text style={styles.name}>$19.99</Text>
+                  <Text style={styles.name}>$100</Text>
                 </View>
               </View>
               <View style={styles.ratingWrapper}>
@@ -79,12 +114,7 @@ export default function ProductDetails() {
                 </View>
               </View>
               <View>
-                <Text style={styles.description}>
-                  Short dress in soft cotton jersey with decorative buttons down
-                  the front and a wide, frill-trimmed square neckline with
-                  concealed elastication. Elasticated seam under the bust and
-                  short puff sleeves with a small frill trim.
-                </Text>
+                <Text style={styles.description}>{data.description}</Text>
               </View>
             </View>
           </View>
@@ -92,7 +122,7 @@ export default function ProductDetails() {
       </ScrollView>
       <View style={styles.footer}>
         <View>
-          <Button style={styles.btnAdd} full rounded>
+          <Button onPress={addCart} style={styles.btnAdd} full rounded>
             <Text style={styles.btnText}>ADD TO CART</Text>
           </Button>
         </View>

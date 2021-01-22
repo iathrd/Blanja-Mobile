@@ -6,6 +6,8 @@ import ModalLoading from '../../components/ModalLoading2';
 
 import {useSelector, useDispatch} from 'react-redux';
 import userAction from '../../redux/actions/user';
+import productAction from '../../redux/actions/product';
+import adressAction from '../../redux/actions/adresss';
 
 const data = [
   {id: '1', rating: 5},
@@ -19,12 +21,19 @@ export default function Home({navigation}) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.user);
+  const product = useSelector((state) => state.product);
+  const adress = useSelector((state) => state.adress);
   useEffect(() => {
     dispatch(userAction.getUser(token));
+    dispatch(productAction.newProduct(token));
+    dispatch(productAction.popularProduct(token));
+    dispatch(adressAction.getAdress(token));
   }, []);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {user.isLoading && <ModalLoading modal={user.isLoading} />}
+      {user.isLoading || product.isLoading || adress.isLoading ? (
+        <ModalLoading modal={user.isLoading} />
+      ) : null}
       <View style={styles.parent}>
         <View>
           <HomeBanner />
@@ -49,10 +58,11 @@ export default function Home({navigation}) {
             <View>
               <FlatList
                 horizontal
-                data={data}
+                data={product.newProduct}
                 renderItem={({item}) => (
                   <ProductCard data={item} navigation={navigation} />
                 )}
+                keyExtractor={(item) => item.id.toString()}
               />
             </View>
           </View>
@@ -75,10 +85,11 @@ export default function Home({navigation}) {
             <View>
               <FlatList
                 horizontal
-                data={data}
+                data={product.popularProduct}
                 renderItem={({item}) => (
                   <ProductCard data={item} navigation={navigation} />
                 )}
+                keyExtractor={(item) => item.id.toString()}
               />
             </View>
           </View>

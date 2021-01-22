@@ -41,7 +41,7 @@ export function Shops() {
         component={MainTab}
       />
       <Stack.Screen
-        options={{headerStyle: {elevation: 0}}}
+        options={{headerStyle: {elevation: 0}, title: null}}
         name="Catalog"
         component={Catalog}
       />

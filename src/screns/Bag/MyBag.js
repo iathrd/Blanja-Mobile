@@ -1,7 +1,11 @@
 import {Button} from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import OrderProductCard from '../../components/OrderProductCard';
+import ModalLoading from '../../components/ModalLoading2';
+
+import {useSelector, useDispatch} from 'react-redux';
+import cartAction from '../../redux/actions/cart';
 
 const data = [
   {id: '1', name: 'PPP', isPrimary: true},
@@ -9,15 +13,34 @@ const data = [
 ];
 
 export default function MyBag({route, navigation}) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const cart = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(cartAction.getCart(token));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    if (cart.deleted) {
+      dispatch(cartAction.getCart(token));
+    }
+  }, [cart.deleted]);
+
   return (
     <SafeAreaView style={styles.parent}>
+      {cart.isLoading && <ModalLoading modal={true} />}
       <View style={styles.content}>
         <View style={styles.labelWrapper}>
           <Text style={styles.labelText}>My Bag</Text>
         </View>
         <View>
           <FlatList
-            data={data}
+            data={cart.data}
             renderItem={({item}) => (
               <OrderProductCard
                 data={item}
@@ -25,6 +48,7 @@ export default function MyBag({route, navigation}) {
                 navigation={navigation}
               />
             )}
+            keyExtractor={(item) => item.id.toString()}
           />
         </View>
       </View>

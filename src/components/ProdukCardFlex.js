@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,15 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import Rating from '../components/Rating';
+import {API_URL} from '@env';
 
-export default function ProdukCardFlex({navigation}) {
+export default function ProdukCardFlex({navigation, data}) {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const image = data.images.map((item) => `${API_URL}${item.image}`);
+    setImages(image);
+  }, []);
   return (
     <View style={styles.cardView}>
       <View style={styles.card}>
@@ -16,34 +23,38 @@ export default function ProdukCardFlex({navigation}) {
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
           style={styles.touch}
-          onPress={() => navigation.navigate('ProductDetails')}>
+          onPress={() => navigation.navigate('ProductDetails', {data, images})}>
           <View style={styles.cardBody}>
             <View>
               <ImageBackground
                 imageStyle={styles.imagest}
-                source={require('../../assets/model.jpg')}
+                source={
+                  data.images !== undefined
+                    ? {uri: `${API_URL}${data.images[0].image}`}
+                    : require('../../assets/model.jpg')
+                }
                 style={styles.image}
               />
             </View>
             <View style={styles.body}>
               <View style={styles.productWrapper}>
                 <View>
-                  <Text style={styles.name}>Pullover</Text>
+                  <Text style={styles.name}>{data.name}</Text>
                 </View>
                 <View>
-                  <Text style={styles.brand}>Mango</Text>
+                  <Text style={styles.brand}>{data.brand}</Text>
                 </View>
               </View>
               <View style={styles.ratingWrapper}>
                 <View style={styles.rating}>
-                  <Rating value={3} />
+                  <Rating value={0} />
                 </View>
                 <View>
-                  <Text style={styles.ratingCount}>(3)</Text>
+                  <Text style={styles.ratingCount}>(0)</Text>
                 </View>
               </View>
               <View>
-                <Text style={styles.price}>51$</Text>
+                <Text style={styles.price}>100$</Text>
               </View>
             </View>
           </View>

@@ -1,21 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Button} from 'native-base';
 import AdressCard from '../../components/AdressCard';
 import PaymentMethod from '../../components/PaymentMethod';
 
-const data = [{name: 'PPP', isPrimary: false}];
+import {useSelector, useDispatch} from 'react-redux';
+import adressAction from '../../redux/actions/adresss';
+
 
 export default function Checkout({navigation, route}) {
+  const adress = useSelector((state) => state.adress.data);
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(adressAction.getAdress(token));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <View style={styles.parent}>
-      {console.log(route)}
       <View style={styles.content}>
         <View style={styles.labelShipping}>
           <Text style={styles.labelText}>Shipping address</Text>
         </View>
         <View style={styles.cardAdressWrapper}>
-          <AdressCard data={data} navigation={navigation} route={route} />
+          <AdressCard data={adress[0]} navigation={navigation} route={route} />
         </View>
         <View>
           <View style={styles.labelPayment}>

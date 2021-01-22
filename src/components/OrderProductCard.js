@@ -1,9 +1,21 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Card, CardItem, Left, Body, Right, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import {useSelector, useDispatch} from 'react-redux';
+import cartAction from '../redux/actions/cart';
+
+import {API_URL} from '@env';
+
 export default function OrderProductCard({data, route}) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+
+  const deleteCart = (id) => {
+    dispatch(cartAction.deleteCart(token, id));
+  };
+
   return (
     <View style={styles.cardWrapper}>
       <Card style={styles.card}>
@@ -13,7 +25,11 @@ export default function OrderProductCard({data, route}) {
               <View style={styles.imageWrapper}>
                 <Image
                   style={styles.image}
-                  source={require('../../assets/model.jpg')}
+                  source={
+                    data.product.images === undefined
+                      ? require('../../assets/model.jpg')
+                      : {uri: `${API_URL}${data.product.images[0].image}`}
+                  }
                 />
               </View>
               <Body>
@@ -21,7 +37,7 @@ export default function OrderProductCard({data, route}) {
                   <View style={styles.headerWrapper}>
                     <View>
                       <View>
-                        <Text style={styles.name}>Pullover</Text>
+                        <Text style={styles.name}>{data.product.name}</Text>
                       </View>
                       {route.name !== 'MyBag' && (
                         <View style={styles.brandWrapper}>
@@ -30,9 +46,11 @@ export default function OrderProductCard({data, route}) {
                       )}
                     </View>
                     {route.name === 'MyBag' && (
-                      <View>
-                        <Icon name="dots-vertical" size={20} color="#9b9b9b" />
-                      </View>
+                      <TouchableOpacity onPress={() => deleteCart(data.id)}>
+                        <View>
+                          <Icon name="bookmark-remove" size={25} color="red" />
+                        </View>
+                      </TouchableOpacity>
                     )}
                   </View>
                   <View style={styles.productInfoWrapper}>
@@ -41,7 +59,9 @@ export default function OrderProductCard({data, route}) {
                         <Text style={styles.labelText}>Color:</Text>
                       </View>
                       <View>
-                        <Text style={styles.labelValue}>Gray</Text>
+                        <Text style={styles.labelValue}>
+                          {data.product.color}
+                        </Text>
                       </View>
                     </View>
                     <View style={styles.labelWrapper}>
@@ -49,7 +69,9 @@ export default function OrderProductCard({data, route}) {
                         <Text style={styles.labelText}>Size:</Text>
                       </View>
                       <View>
-                        <Text style={styles.labelValue}>L</Text>
+                        <Text style={styles.labelValue}>
+                          {data.product.size}
+                        </Text>
                       </View>
                     </View>
                   </View>
@@ -84,7 +106,7 @@ export default function OrderProductCard({data, route}) {
                     )}
 
                     <View>
-                      <Text style={styles.price}>51$</Text>
+                      <Text style={styles.price}>100$</Text>
                     </View>
                   </View>
                 </View>

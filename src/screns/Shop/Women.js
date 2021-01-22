@@ -9,14 +9,7 @@ import {
 } from 'react-native';
 import CategoryCard from '../../components/CategoryCard';
 
-const data = [
-  {id: '1', name: 'pppp'},
-  {id: '2', name: 'pppp'},
-  {id: '3', name: 'pppp'},
-  {id: '4', name: 'pppp'},
-  {id: '5', name: 'pppp'},
-  {id: '6', name: 'pppp'},
-];
+const data = [{id: '1', name: 'New'}];
 
 export default function Women({navigation}) {
   return (

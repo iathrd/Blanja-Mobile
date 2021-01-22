@@ -4,11 +4,15 @@ import {combineReducers} from 'redux';
 import auth from './auth';
 import user from './user';
 import adress from './adress';
+import product from './product';
+import cart from './cart';
 
 const rootReducer = combineReducers({
   auth,
   user,
   adress,
+  product,
+  cart,
 });
 
 export default (state, action) =>

@@ -9,7 +9,7 @@ export default function OrderCard({data, navigation}) {
         <TouchableHighlight
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
-          onPress={() => navigation.navigate('OrderDetails')}>
+          onPress={() => console.log('PPP')}>
           <View>
             <CardItem style={styles.headerCard}>
               <Left>

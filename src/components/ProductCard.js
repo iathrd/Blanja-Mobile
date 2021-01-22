@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,16 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import Rating from '../components/Rating';
+import {API_URL} from '@env';
 
-export default function ProductCard({display = 'flex', navigation}) {
+export default function ProductCard({display = 'flex', navigation, data}) {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const image = data.images.map((item) => `${API_URL}${item.image}`);
+    setImages(image);
+  }, []);
+
   return (
     <View style={display === 'grid' && styles.grid}>
       <View style={styles.cardWrapper}>
@@ -16,13 +24,17 @@ export default function ProductCard({display = 'flex', navigation}) {
           style={styles.touch}
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
-          onPress={() => navigation.navigate('ProductDetails')}>
+          onPress={() => navigation.navigate('ProductDetails', {data, images})}>
           <View>
             <View>
               <ImageBackground
                 style={styles.image}
                 imageStyle={styles.imgStyles}
-                source={require('../../assets/model.jpg')}>
+                source={
+                  data.images !== undefined
+                    ? {uri: `${API_URL}${data.images[0].image}`}
+                    : require('../../assets/model.jpg')
+                }>
                 <View>
                   <View style={styles.productInfo}>
                     <Text style={styles.textInfo}>NEW</Text>
@@ -38,13 +50,13 @@ export default function ProductCard({display = 'flex', navigation}) {
                 </View>
               </View>
               <View>
-                <Text style={styles.brand}>OVS</Text>
+                <Text style={styles.brand}>{data.brand}</Text>
               </View>
               <View style={styles.nameWrapper}>
-                <Text style={styles.name}>Blouse</Text>
+                <Text style={styles.name}>{data.name}</Text>
               </View>
               <View>
-                <Text style={styles.price}>30$</Text>
+                <Text style={styles.price}>100$</Text>
               </View>
             </View>
           </View>

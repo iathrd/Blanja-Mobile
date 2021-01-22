@@ -13,6 +13,8 @@ import ProductCardFlex from '../../components/ProdukCardFlex';
 import ProductCard from '../../components/ProductCard';
 import Animated from 'react-native-reanimated';
 import SortBottomShip from '../../components/SortBottomShip';
+import {useSelector, useDispatch} from 'react-redux';
+import productAction from '../../redux/actions/product';
 
 const data = [
   {id: '1', name: 'PPP', isPrimary: true},
@@ -26,9 +28,29 @@ const data = [
 ];
 
 export default function Catalog({navigation}) {
+  const dispatch = useDispatch();
   const [filter, setFilter] = useState({display: 'flex'});
   const bs = React.createRef();
+  const token = useSelector((state) => state.auth.token);
+  const pageInfo = useSelector((state) => state.product.pageInfo);
+  const product = useSelector((state) => state.product.catalog);
   const fall = new Animated.Value(1);
+
+  React.useEffect(() => {
+    // const unsubscribe = navigation.addListener('focus', () => {
+    dispatch(productAction.getCatalog(token));
+    // });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    // return unsubscribe;
+  }, []);
+
+  const loadData = () => {
+    const {nextLink} = pageInfo;
+    if (nextLink) {
+      dispatch(productAction.loadData(token, nextLink));
+    }
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -80,15 +102,18 @@ export default function Catalog({navigation}) {
           <View style={styles.content}>
             {filter.display === 'flex' ? (
               <FlatList
-                data={data}
+                data={product}
                 renderItem={({item}) => (
                   <ProductCardFlex data={item} navigation={navigation} />
                 )}
+                onEndReached={loadData}
+                onEndReachedThreshold={0.4}
+                keyExtractor={(item) => item.id.toString()}
               />
             ) : (
               <View style={{flexDirection: 'row'}}>
                 <FlatList
-                  data={data}
+                  data={product}
                   numColumns={2}
                   renderItem={({item}) => (
                     <ProductCard
@@ -97,6 +122,8 @@ export default function Catalog({navigation}) {
                       navigation={navigation}
                     />
                   )}
+                  onEndReached={loadData}
+                  onEndReachedThreshold={0.4}
                 />
               </View>
             )}

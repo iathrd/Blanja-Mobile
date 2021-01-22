@@ -26,7 +26,7 @@ export default function AdressCard({data, navigation, route}) {
             <Body style={styles.bodyWrapper}>
               <View>
                 <Text style={styles.adress}>
-                  {(data.adress, data.postalCode, data.city)}
+                  {`${data.adress}, ${data.postalCode}, ${data.city}`}
                 </Text>
               </View>
             </Body>

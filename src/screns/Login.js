@@ -21,15 +21,7 @@ export default function Login() {
     dispatch(authAction.doLogin(values));
   };
 
-  const openFile = () => {
-    launchImageLibrary({mediaType: 'photo'}, (response) => {
-      if (response.didCancel) {
-        console.log(cancel);
-      } else {
-        console.log(response.fileName);
-      }
-    });
-  };
+ 
 
   return (
     <View style={styles.content}>

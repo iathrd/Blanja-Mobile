@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import {Item, Input, Button} from 'native-base';
 import AdressCard from '../components/AdressCard';
@@ -17,19 +17,25 @@ const data = [
 export default function ShippingAdress({navigation, route}) {
   const dispatch = useDispatch();
   const adress = useSelector((state) => state.adress);
+  const [search, setSearch] = useState({search: '', isSubmit: false});
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(adressAction.getAdress(token));
+      dispatch(adressAction.getAdress(token, search.search));
     });
 
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, search.isSubmit]);
+
+  const handleSubmit = () => {
+    setSearch({isSubmit: true});
+    dispatch(adressAction.getAdress(token, search.search));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {adress.isLoading && <ModalLoading modal={adress.isLoading} />}
+     
       <View style={styles.content}>
         <View style={styles.searchWrapper}>
           <Item style={styles.item} rounded>
@@ -37,7 +43,10 @@ export default function ShippingAdress({navigation, route}) {
             <Input
               style={styles.input}
               placeholder="Search"
+              name="search"
+              onChangeText={(text) => setSearch({search: text})}
               placeholderTextColor="#9B9B9B"
+              onSubmitEditing={() => handleSubmit()}
             />
           </Item>
         </View>

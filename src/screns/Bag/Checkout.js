@@ -7,7 +7,6 @@ import PaymentMethod from '../../components/PaymentMethod';
 import {useSelector, useDispatch} from 'react-redux';
 import adressAction from '../../redux/actions/adresss';
 
-
 export default function Checkout({navigation, route}) {
   const adress = useSelector((state) => state.adress.data);
   const token = useSelector((state) => state.auth.token);
@@ -28,7 +27,21 @@ export default function Checkout({navigation, route}) {
           <Text style={styles.labelText}>Shipping address</Text>
         </View>
         <View style={styles.cardAdressWrapper}>
-          <AdressCard data={adress[0]} navigation={navigation} route={route} />
+          {adress[0] !== undefined ? (
+            <AdressCard
+              data={adress[0]}
+              navigation={navigation}
+              route={route}
+            />
+          ) : (
+            <View>
+              <View>
+                <Text>
+                  You don't have shipping adress please add adress to continue
+                </Text>
+              </View>
+            </View>
+          )}
         </View>
         <View>
           <View style={styles.labelPayment}>
@@ -75,6 +88,7 @@ export default function Checkout({navigation, route}) {
               })
             }
             style={styles.btnSubmit}
+            disabled={adress[0] !== undefined ? false : true}
             full
             rounded>
             <Text style={styles.btnText}>SUBMIT ORDER</Text>

@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Item, Input, Button, Spinner} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ModalError from '../components/ModalError';
+import ModalLoading from '../components/ModalLoading2';
 
 import {useDispatch, useSelector} from 'react-redux';
 import authAction from '../redux/actions/auth';
@@ -21,8 +22,6 @@ export default function Login() {
     dispatch(authAction.doLogin(values));
   };
 
- 
-
   return (
     <View style={styles.content}>
       {auth.isError && (
@@ -32,6 +31,7 @@ export default function Login() {
           message={auth.alertMsg}
         />
       )}
+      {auth.isLoading && <ModalLoading modal={true} />}
       <Formik
         initialValues={{email: '', password: ''}}
         onSubmit={(values) => login(values)}>
@@ -84,11 +84,7 @@ export default function Login() {
                   style={styles.btn}
                   full
                   rounded>
-                  {auth.isLoading ? (
-                    <Spinner color="white" size={30} />
-                  ) : (
-                    <Text style={styles.btnText}>LOGIN</Text>
-                  )}
+                  <Text style={styles.btnText}>LOGIN</Text>
                 </Button>
               </View>
             </View>

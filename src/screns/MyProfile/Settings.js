@@ -27,6 +27,7 @@ export default function Settings() {
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const user = useSelector((state) => state.user.data);
   const send = useSelector((state) => state.user);
+  const [alert, setAlert] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const bs = React.createRef();
   const fall = new Animated.Value(1);
@@ -177,6 +178,8 @@ export default function Settings() {
     launchImageLibrary({mediaType: 'photo'}, (response) => {
       if (response.didCancel) {
         console.log('Fif cancel');
+      } else if (response.fileSize >= 1 * 1024 * 1024) {
+        setAlert(true);
       } else {
         const image = new FormData();
         image.append('avatar', {
@@ -203,6 +206,10 @@ export default function Settings() {
     dispatch(userAction.clearMessage());
   };
 
+  const closeAlert = () => {
+    setAlert(false);
+  };
+
   return (
     <>
       <BottomSheet
@@ -226,6 +233,13 @@ export default function Settings() {
           modal={send.isError}
           handleClose={closeModal}
           message={send.alertMsg}
+        />
+      )}
+      {alert && (
+        <ModalError
+          modal={alert}
+          handleClose={closeAlert}
+          message="Photo to large"
         />
       )}
       <ScrollView showsVerticalScrollIndicator={false}>

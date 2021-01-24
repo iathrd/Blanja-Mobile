@@ -37,13 +37,13 @@ export default function Register({navigation}) {
           message={auth.alertMsg}
         />
       )}
-      {auth.isSuccess && (
+      {auth.register && (
         <ModalSucces
-          modal={auth.isError}
+          modal={true}
           handleClose={closeSuccess}
           message={auth.alertMsg}
         />
-      )}
+     )}
       <Formik
         initialValues={{name: '', email: '', password: ''}}
         validationSchema={registerSchema}

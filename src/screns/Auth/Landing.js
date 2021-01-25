@@ -7,7 +7,7 @@ export default function Landing({navigation}) {
     <View style={styles.container}>
       <ImageBackground
         style={styles.image}
-        source={require('../../assets/Landing2.jpg')}>
+        source={require('../../../assets/Landing2.jpg')}>
         <View style={styles.content}>
           <View style={styles.labelWrapper}>
             <Text style={styles.textLabel}>Welcome to Blanja</Text>

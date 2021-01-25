@@ -2,11 +2,11 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Item, Input, Button, Spinner} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ModalError from '../components/ModalError';
-import ModalLoading from '../components/ModalLoading2';
+import ModalError from '../../components/ModalError';
+import ModalLoading from '../../components/ModalLoading2';
 
 import {useDispatch, useSelector} from 'react-redux';
-import authAction from '../redux/actions/auth';
+import authAction from '../../redux/actions/auth';
 import {Formik} from 'formik';
 import {launchImageLibrary} from 'react-native-image-picker';
 

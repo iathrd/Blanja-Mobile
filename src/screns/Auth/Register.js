@@ -3,13 +3,13 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Item, Input, Button, Spinner} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Formik} from 'formik';
-import ModalError from '../components/ModalError';
-import ModalSucces from '../components/ModalSuccess';
+import ModalError from '../../components/ModalError';
+import ModalSucces from '../../components/ModalSuccess';
 
-import {registerSchema} from '../helpers/formValidation';
+import {registerSchema} from '../../helpers/formValidation';
 
 import {useSelector, useDispatch} from 'react-redux';
-import authAction from '../redux/actions/auth';
+import authAction from '../../redux/actions/auth';
 
 export default function Register({navigation}) {
   const dispatch = useDispatch();

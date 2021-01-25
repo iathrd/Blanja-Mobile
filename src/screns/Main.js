@@ -1,6 +1,7 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Fontisto';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -8,9 +9,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import TabNavigation from './Navigation/TabNavigation';
 import Settings from './MyProfile/Settings';
 import ProductDetails from './ProductDetails';
-import Login from './Login';
-import Register from './Register';
-import Landing from './Landing';
+import Login from './Auth/Login';
+import Register from './Auth/Register';
+import Landing from './Auth/Landing';
 import Favorites from './Favorites/Favorites';
 
 import {MyOrderStack, MyBagStack, adressStack} from './Navigation/Navigation';
@@ -24,18 +25,26 @@ export default function Main() {
   return (
     <NavigationContainer>
       {!token.length ? (
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={({navigation}) => ({
+            title: null,
+            headerStyle: {elevation: 0, backgroundColor: 'transparent'},
+
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View style={styles.iconContainer}>
+                  <Icon name="arrow-back-ios" size={24} />
+                </View>
+              </TouchableOpacity>
+            ),
+          })}>
           <Stack.Screen
             options={{headerShown: false}}
             name="Landing"
             component={Landing}
           />
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen
-            options={{title: null}}
-            name="Register"
-            component={Register}
-          />
+          <Stack.Screen name="Register" component={Register} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
@@ -67,3 +76,9 @@ export default function Main() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  iconContainer: {
+    marginLeft: 16,
+  },
+});

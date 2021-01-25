@@ -43,127 +43,131 @@ export default function Settings() {
     dispatch(userAction.changePassword(token, data));
   };
 
-  const renderInner = () => (
-    <Animated.View>
-      <View style={styles.shipContent}>
-        <Formik
-          initialValues={{
-            oldPassword: '',
-            newPassword: '',
-            repeatPassword: '',
-          }}
-          validationSchema={changePassword}
-          onSubmit={(values) => changePs(values)}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
-            <>
-              <View>
+  const renderInner = () => {
+    return (
+      <Animated.View>
+        <View style={styles.shipContent}>
+          <Formik
+            initialValues={{
+              oldPassword: '',
+              newPassword: '',
+              repeatPassword: '',
+            }}
+            validationSchema={changePassword}
+            onSubmit={(values) => changePs(values)}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <>
                 <View>
-                  <Item
-                    style={
-                      errors.oldPassword && touched.oldPassword
-                        ? styles.itemInputError
-                        : styles.itemInput
-                    }
-                    regular>
-                    <Input
-                      style={styles.input}
-                      placeholder="Old Password"
-                      placeholderTextColor="#9b9b9b"
-                      name="oldPassword"
-                      value={values.oldPassword}
-                      onChangeText={handleChange('oldPassword')}
-                      onBlur={handleBlur('oldPassword')}
-                      secureTextEntry
-                    />
-                  </Item>
+                  <View>
+                    <Item
+                      style={
+                        errors.oldPassword && touched.oldPassword
+                          ? styles.itemInputError
+                          : styles.itemInput
+                      }
+                      regular>
+                      <Input
+                        style={styles.input}
+                        placeholder="Old Password"
+                        placeholderTextColor="#9b9b9b"
+                        name="oldPassword"
+                        value={values.oldPassword}
+                        onChangeText={handleChange('oldPassword')}
+                        onBlur={handleBlur('oldPassword')}
+                        secureTextEntry
+                      />
+                    </Item>
+                    <View style={styles.errorWrapper}>
+                      {errors.oldPassword && touched.oldPassword && (
+                        <Text style={styles.errorText}>
+                          {errors.oldPassword}
+                        </Text>
+                      )}
+                    </View>
+                  </View>
+                  <View style={styles.forgotTextWrapper}>
+                    <Text style={styles.changeText}>Forgot Password? </Text>
+                  </View>
+                </View>
+                <View style={styles.inputShipWrapper}>
+                  <View>
+                    <Item
+                      style={
+                        errors.newPassword && touched.newPassword
+                          ? styles.itemInputError
+                          : styles.itemInput
+                      }
+                      regular>
+                      <Input
+                        style={styles.input}
+                        placeholder="New Password"
+                        placeholderTextColor="#9b9b9b"
+                        name="newPassword"
+                        value={values.newPassword}
+                        onChangeText={handleChange('newPassword')}
+                        onBlur={handleBlur('newPassword')}
+                        secureTextEntry
+                      />
+                    </Item>
+                  </View>
                   <View style={styles.errorWrapper}>
-                    {errors.oldPassword && touched.oldPassword && (
-                      <Text style={styles.errorText}>{errors.oldPassword}</Text>
+                    {errors.newPassword && touched.newPassword && (
+                      <Text style={styles.errorText}>{errors.newPassword}</Text>
                     )}
                   </View>
                 </View>
-                <View style={styles.forgotTextWrapper}>
-                  <Text style={styles.changeText}>Forgot Password? </Text>
+                <View style={styles.inputShipWrapper}>
+                  <View>
+                    <Item
+                      style={
+                        errors.repeatPassword && touched.repeatPassword
+                          ? styles.itemInputError
+                          : styles.itemInput
+                      }
+                      regular>
+                      <Input
+                        style={styles.input}
+                        placeholder="Repeat New Password"
+                        placeholderTextColor="#9b9b9b"
+                        name="repeatPassword"
+                        value={values.repeatPassword}
+                        onChangeText={handleChange('repeatPassword')}
+                        onBlur={handleBlur('repeatPassword')}
+                        secureTextEntry
+                      />
+                    </Item>
+                  </View>
+                  <View style={styles.errorWrapper}>
+                    {errors.repeatPassword && touched.repeatPassword && (
+                      <Text style={styles.errorText}>
+                        {errors.repeatPassword}
+                      </Text>
+                    )}
+                  </View>
                 </View>
-              </View>
-              <View style={styles.inputShipWrapper}>
-                <View>
-                  <Item
-                    style={
-                      errors.newPassword && touched.newPassword
-                        ? styles.itemInputError
-                        : styles.itemInput
-                    }
-                    regular>
-                    <Input
-                      style={styles.input}
-                      placeholder="New Password"
-                      placeholderTextColor="#9b9b9b"
-                      name="newPassword"
-                      value={values.newPassword}
-                      onChangeText={handleChange('newPassword')}
-                      onBlur={handleBlur('newPassword')}
-                      secureTextEntry
-                    />
-                  </Item>
+                <View style={styles.btnSaveWrapper}>
+                  <Button
+                    onPress={handleSubmit}
+                    style={styles.btnSave}
+                    full
+                    rounded>
+                    <Text style={styles.textSave}>SAVE PASSWORD</Text>
+                  </Button>
                 </View>
-                <View style={styles.errorWrapper}>
-                  {errors.newPassword && touched.newPassword && (
-                    <Text style={styles.errorText}>{errors.newPassword}</Text>
-                  )}
-                </View>
-              </View>
-              <View style={styles.inputShipWrapper}>
-                <View>
-                  <Item
-                    style={
-                      errors.repeatPassword && touched.repeatPassword
-                        ? styles.itemInputError
-                        : styles.itemInput
-                    }
-                    regular>
-                    <Input
-                      style={styles.input}
-                      placeholder="Repeat New Password"
-                      placeholderTextColor="#9b9b9b"
-                      name="repeatPassword"
-                      value={values.repeatPassword}
-                      onChangeText={handleChange('repeatPassword')}
-                      onBlur={handleBlur('repeatPassword')}
-                      secureTextEntry
-                    />
-                  </Item>
-                </View>
-                <View style={styles.errorWrapper}>
-                  {errors.repeatPassword && touched.repeatPassword && (
-                    <Text style={styles.errorText}>
-                      {errors.repeatPassword}
-                    </Text>
-                  )}
-                </View>
-              </View>
-              <View style={styles.btnSaveWrapper}>
-                <Button
-                  onPress={handleSubmit}
-                  style={styles.btnSave}
-                  full
-                  rounded>
-                  <Text style={styles.textSave}>SAVE PASSWORD</Text>
-                </Button>
-              </View>
-            </>
-          )}
-        </Formik>
-      </View>
-    </Animated.View>
-  );
+              </>
+            )}
+          </Formik>
+        </View>
+      </Animated.View>
+    );
+  };
 
   const renderHeader = () => (
     <View style={styles.headerWrapper}>
@@ -210,8 +214,26 @@ export default function Settings() {
     setAlert(false);
   };
 
+  const renderShadow = () => {
+    const animatedShadowOpacity = Animated.interpolate(fall, {
+      inputRange: [0, 1],
+      outputRange: [0.5, 0],
+    });
+
+    return (
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.shadowContainer,
+          {
+            opacity: animatedShadowOpacity,
+          },
+        ]}
+      />
+    );
+  };
   return (
-    <>
+    <View>
       <BottomSheet
         ref={bs}
         snapPoints={[400, 0]}
@@ -221,6 +243,7 @@ export default function Settings() {
         callbackNode={fall}
         enabledBottomInitialAnimation={true}
       />
+
       {send.isSuccess && (
         <ModalSucces
           modal={send.isSuccess}
@@ -242,170 +265,177 @@ export default function Settings() {
           message="Photo to large"
         />
       )}
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <View style={styles.labelWrapper}>
-            <Text style={styles.label}>Settings</Text>
-          </View>
-          <View style={styles.infoWrapper}>
-            <View style={styles.labelInfoWrapper}>
-              <Text style={styles.infoLabel}>Personal Information</Text>
+      <Animated.View
+        style={{
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+        }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>Settings</Text>
             </View>
-            <View style={styles.avatarWrapper}>
-              <View>
-                <Thumbnail
-                  large
-                  source={
-                    user.details.avatar !== null
-                      ? {uri: `${API_URL}${user.details.avatar}`}
-                      : require('../../../assets/default-avatar.png')
-                  }
-                />
+            <View style={styles.infoWrapper}>
+              <View style={styles.labelInfoWrapper}>
+                <Text style={styles.infoLabel}>Personal Information</Text>
               </View>
-              <View style={styles.btnChangeWrapper}>
-                <Button
-                  onPress={() => openFile()}
-                  style={styles.btnChange}
-                  full
-                  rounded>
-                  {/* {send.isLoading ? (
+              <View style={styles.avatarWrapper}>
+                <View>
+                  <Thumbnail
+                    large
+                    source={
+                      user.details.avatar !== null
+                        ? {uri: `${API_URL}${user.details.avatar}`}
+                        : require('../../../assets/default-avatar.png')
+                    }
+                  />
+                </View>
+                <View style={styles.btnChangeWrapper}>
+                  <Button
+                    onPress={() => openFile()}
+                    style={styles.btnChange}
+                    full
+                    rounded>
+                    {/* {send.isLoading ? (
                     <Spinner color="white" size={30} />
                   ) : ( */}
-                  <Text style={styles.textChange}>Change avatar</Text>
-                  {/* )} */}
-                </Button>
+                    <Text style={styles.textChange}>Change avatar</Text>
+                    {/* )} */}
+                  </Button>
+                </View>
               </View>
-            </View>
-            <Formik
-              initialValues={{
-                username: user.name,
-                dateOfBirth: moment(user.createdAt).format('DD/MM/YYYY'),
-              }}
-              onSubmit={(values) => console.log(values)}>
-              {({
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                values,
-                errors,
-                touched,
-              }) => (
-                <>
-                  <View style={styles.inputWrapper}>
-                    <Item style={styles.itemInput} regular>
-                      <Input
-                        style={styles.input}
-                        placeholderTextColor="#9b9b9b"
-                        placeholder="Full name"
-                        name="username"
-                        value={values.username}
-                        onChangeText={handleChange('username')}
-                        onBlur={handleBlur('username')}
-                      />
-                    </Item>
+              <Formik
+                initialValues={{
+                  username: user.name,
+                  dateOfBirth: moment(user.createdAt).format('DD/MM/YYYY'),
+                }}
+                onSubmit={(values) => console.log(values)}>
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors,
+                  touched,
+                }) => (
+                  <>
+                    <View style={styles.inputWrapper}>
+                      <Item style={styles.itemInput} regular>
+                        <Input
+                          style={styles.input}
+                          placeholderTextColor="#9b9b9b"
+                          placeholder="Full name"
+                          name="username"
+                          value={values.username}
+                          onChangeText={handleChange('username')}
+                          onBlur={handleBlur('username')}
+                        />
+                      </Item>
+                    </View>
+                    <View>
+                      <Item style={styles.itemInput} regular>
+                        <Input
+                          style={styles.input}
+                          placeholderTextColor="#9b9b9b"
+                          placeholder="Date of Birth"
+                          name="dateOfBirth"
+                          value={values.dateOfBirth}
+                          onChangeText={handleChange('dateOfBirth')}
+                          onBlur={handleBlur('dateOfBirth')}
+                        />
+                      </Item>
+                    </View>
+                  </>
+                )}
+              </Formik>
+
+              <View style={styles.changePasswordWrapper}>
+                <View style={styles.changeLabelWrapper}>
+                  <View>
+                    <Text style={styles.infoLabel}>Password</Text>
                   </View>
                   <View>
-                    <Item style={styles.itemInput} regular>
-                      <Input
-                        style={styles.input}
-                        placeholderTextColor="#9b9b9b"
-                        placeholder="Date of Birth"
-                        name="dateOfBirth"
-                        value={values.dateOfBirth}
-                        onChangeText={handleChange('dateOfBirth')}
-                        onBlur={handleBlur('dateOfBirth')}
-                      />
-                    </Item>
+                    <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+                      <Text style={styles.changeText}>Change</Text>
+                    </TouchableOpacity>
                   </View>
-                </>
-              )}
-            </Formik>
-
-            <View style={styles.changePasswordWrapper}>
-              <View style={styles.changeLabelWrapper}>
-                <View>
-                  <Text style={styles.infoLabel}>Password</Text>
                 </View>
                 <View>
-                  <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
-                    <Text style={styles.changeText}>Change</Text>
-                  </TouchableOpacity>
+                  <Item style={styles.itemInput} regular>
+                    <Input
+                      style={styles.input}
+                      placeholderTextColor="#9b9b9b"
+                      disabled
+                      value={'12312314194'}
+                      placeholder="Password"
+                      secureTextEntry
+                    />
+                  </Item>
                 </View>
               </View>
               <View>
-                <Item style={styles.itemInput} regular>
-                  <Input
-                    style={styles.input}
-                    placeholderTextColor="#9b9b9b"
-                    disabled
-                    value={'12312314194'}
-                    placeholder="Password"
-                    secureTextEntry
-                  />
-                </Item>
-              </View>
-            </View>
-            <View>
-              <View style={styles.notifLabelWrapper}>
-                <Text style={styles.infoLabel}>Notifications</Text>
-              </View>
-              <View style={styles.contentNotif}>
-                <View>
-                  <Text style={styles.notifLabel}>Sales</Text>
+                <View style={styles.notifLabelWrapper}>
+                  <Text style={styles.infoLabel}>Notifications</Text>
                 </View>
-                <View>
-                  <Switch
-                    trackColor={{
-                      false: 'rgba(155,155,155,0.2)',
-                      true: 'rgba(155,155,155,0.1)',
-                    }}
-                    thumbColor={isEnabled ? '#2AA952' : '#FFFFFF'}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-                  />
+                <View style={styles.contentNotif}>
+                  <View>
+                    <Text style={styles.notifLabel}>Sales</Text>
+                  </View>
+                  <View>
+                    <Switch
+                      trackColor={{
+                        false: 'rgba(155,155,155,0.2)',
+                        true: 'rgba(155,155,155,0.1)',
+                      }}
+                      thumbColor={isEnabled ? '#2AA952' : '#FFFFFF'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={toggleSwitch}
+                      value={isEnabled}
+                    />
+                  </View>
                 </View>
-              </View>
 
-              <View style={styles.contentNotif}>
-                <View>
-                  <Text style={styles.notifLabel}>New arrivals</Text>
+                <View style={styles.contentNotif}>
+                  <View>
+                    <Text style={styles.notifLabel}>New arrivals</Text>
+                  </View>
+                  <View>
+                    <Switch
+                      trackColor={{
+                        false: 'rgba(155,155,155,0.2)',
+                        true: 'rgba(155,155,155,0.1)',
+                      }}
+                      thumbColor={isEnabled ? '#2AA952' : '#FFFFFF'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={toggleSwitch}
+                      value={isEnabled}
+                    />
+                  </View>
                 </View>
-                <View>
-                  <Switch
-                    trackColor={{
-                      false: 'rgba(155,155,155,0.2)',
-                      true: 'rgba(155,155,155,0.1)',
-                    }}
-                    thumbColor={isEnabled ? '#2AA952' : '#FFFFFF'}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-                  />
-                </View>
-              </View>
-              <View style={styles.contentNotif}>
-                <View>
-                  <Text style={styles.notifLabel}>Delivery status changes</Text>
-                </View>
-                <View>
-                  <Switch
-                    trackColor={{
-                      false: 'rgba(155,155,155,0.2)',
-                      true: 'rgba(155,155,155,0.1)',
-                    }}
-                    thumbColor={isEnabled ? '#2AA952' : '#FFFFFF'}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-                  />
+                <View style={styles.contentNotif}>
+                  <View>
+                    <Text style={styles.notifLabel}>
+                      Delivery status changes
+                    </Text>
+                  </View>
+                  <View>
+                    <Switch
+                      trackColor={{
+                        false: 'rgba(155,155,155,0.2)',
+                        true: 'rgba(155,155,155,0.1)',
+                      }}
+                      thumbColor={isEnabled ? '#2AA952' : '#FFFFFF'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={toggleSwitch}
+                      value={isEnabled}
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </>
+        </ScrollView>
+      </Animated.View>
+    </View>
   );
 }
 
@@ -475,6 +505,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 34,
     borderTopRightRadius: 34,
     alignItems: 'center',
+    borderTopColor: '#9b9b9b',
   },
   tab: {
     width: 60,

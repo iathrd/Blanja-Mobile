@@ -35,16 +35,23 @@ const renderHeader = () => (
 );
 
 export default function SortBottomShip({fall, bs}) {
+  const animatedShadowOpacity = Animated.interpolate(fall, {
+    inputRange: [0, 1],
+    outputRange: [0.5, 0],
+  });
   return (
-    <BottomSheet
-      ref={bs}
-      snapPoints={[400, 0]}
-      initialSnap={1}
-      renderContent={renderInner}
-      renderHeader={renderHeader}
-      callbackNode={fall}
-      enabledBottomInitialAnimation={true}
-    />
+    <>
+      <BottomSheet
+        ref={bs}
+        snapPoints={[400, 0]}
+        initialSnap={1}
+        renderContent={renderInner}
+        renderHeader={renderHeader}
+        callbackNode={fall}
+        enabledBottomInitialAnimation={true}
+      />
+      
+    </>
   );
 }
 

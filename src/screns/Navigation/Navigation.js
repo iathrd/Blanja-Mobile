@@ -1,4 +1,6 @@
 import React from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -72,7 +74,16 @@ export function MyBagStack() {
 
 export function MyProfiles() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {backgroundColor: 'transparent', elevation: 0},
+        title: null,
+        headerRight: () => (
+          <View style={styles.iconWrapper}>
+            <Icon name="search" size={27} />
+          </View>
+        ),
+      }}>
       <Stack.Screen name="MyProfile" component={MyProfile} />
     </Stack.Navigator>
   );
@@ -80,9 +91,33 @@ export function MyProfiles() {
 
 export function MyOrderStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="MyOrders" component={MyOrders} />
-      <Stack.Screen name="OrderDetails" component={OrderDetails} />
+    <Stack.Navigator
+      screenOptions={({navigation}) => ({
+        headerTitleAlign: 'center',
+        headerStyle: {elevation: 0},
+        headerRight: () => (
+          <View style={styles.iconWrapper}>
+            <Icon name="search" size={25} />
+          </View>
+        ),
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={styles.iconLeft}>
+              <Icon name="arrow-back-ios" size={23} />
+            </View>
+          </TouchableOpacity>
+        ),
+      })}>
+      <Stack.Screen
+        options={{title: null}}
+        name="MyOrders"
+        component={MyOrders}
+      />
+      <Stack.Screen
+        name="OrderDetails"
+        options={{title: 'Order Details'}}
+        component={OrderDetails}
+      />
     </Stack.Navigator>
   );
 }
@@ -90,10 +125,18 @@ export function MyOrderStack() {
 export function adressStack() {
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerTitleStyle: {fontSize: 18, lineHeight: 22, color: '#222222'},
+      screenOptions={({navigation}) => ({
+        headerTitleStyle: styles.headerText,
         headerTitleAlign: 'center',
-      }}>
+        headerStyle: {elevation: 1},
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={styles.iconLeft}>
+              <Icon name="arrow-back-ios" size={23} />
+            </View>
+          </TouchableOpacity>
+        ),
+      })}>
       <Stack.Screen
         options={{title: 'Shipping address'}}
         name="ShippingAdress"
@@ -112,3 +155,17 @@ export function adressStack() {
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  iconWrapper: {
+    marginRight: 16,
+  },
+  iconLeft: {
+    marginLeft: 16,
+  },
+  headerText: {
+    fontSize: 18,
+    lineHeight: 22,
+    color: '#222222',
+  },
+});

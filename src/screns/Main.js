@@ -31,7 +31,6 @@ export default function Main() {
           screenOptions={({navigation}) => ({
             title: null,
             headerStyle: {elevation: 0, backgroundColor: 'transparent'},
-
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <View style={styles.iconContainer}>
@@ -74,7 +73,26 @@ export default function Main() {
           />
           <Stack.Screen name="Favorites" component={Favorites} />
           <Stack.Screen name="ProductDetails" component={ProductDetails} />
-          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen
+            options={({navigation}) => ({
+              headerStyle: {backgroundColor: 'transparent', elevation: 0},
+              title: null,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <View style={styles.iconContainer}>
+                    <Icon name="arrow-back-ios" size={23} />
+                  </View>
+                </TouchableOpacity>
+              ),
+              headerRight: () => (
+                <View style={styles.headerRight}>
+                  <Icon name="search" size={25} />
+                </View>
+              ),
+            })}
+            name="Settings"
+            component={Settings}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>
@@ -84,5 +102,8 @@ export default function Main() {
 const styles = StyleSheet.create({
   iconContainer: {
     marginLeft: 16,
+  },
+  headerRight: {
+    marginRight: 16,
   },
 });

@@ -9,6 +9,7 @@ export default function ModalSucces({modal, handleClose, message}) {
       <Modal
         onBackButtonPress={handleClose}
         onBackdropPress={handleClose}
+        animationIn="zoomIn"
         isVisible={true}>
         <View style={styles.modalWrapper}>
           <View style={styles.modalContent}>

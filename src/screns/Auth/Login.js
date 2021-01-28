@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Item, Input, Button, Spinner} from 'native-base';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Item, Input, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ModalError from '../../components/ModalError';
 import ModalLoading from '../../components/ModalLoading2';
@@ -8,9 +8,8 @@ import ModalLoading from '../../components/ModalLoading2';
 import {useDispatch, useSelector} from 'react-redux';
 import authAction from '../../redux/actions/auth';
 import {Formik} from 'formik';
-import {launchImageLibrary} from 'react-native-image-picker';
 
-export default function Login() {
+export default function Login({navigation}) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
@@ -69,14 +68,20 @@ export default function Login() {
                   />
                 </Item>
               </View>
-              <View style={styles.haveWrapper}>
-                <View style={styles.have}>
-                  <Text style={styles.alreadyText}>Forgot your password?</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ForgotPassword')}>
+                <View style={styles.haveWrapper}>
+                  <View style={styles.have}>
+                    <Text style={styles.alreadyText}>
+                      Forgot your password?
+                    </Text>
+                  </View>
+
+                  <View>
+                    <Icon name="arrow-right-alt" size={25} color="#DB3022" />
+                  </View>
                 </View>
-                <View>
-                  <Icon name="arrow-right-alt" size={25} color="#DB3022" />
-                </View>
-              </View>
+              </TouchableOpacity>
               <View>
                 <Button
                   disabled={auth.isLoading ? true : false}

@@ -13,6 +13,8 @@ import Login from './Auth/Login';
 import Register from './Auth/Register';
 import Landing from './Auth/Landing';
 import Favorites from './Favorites/Favorites';
+import ForgotPassword from './Auth/ForgotPassword';
+import ResetPassword from './Auth/ResetPassword';
 
 import {MyOrderStack, MyBagStack, adressStack} from './Navigation/Navigation';
 const Stack = createStackNavigator();
@@ -45,6 +47,8 @@ export default function Main() {
           />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>

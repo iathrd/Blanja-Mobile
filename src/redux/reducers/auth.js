@@ -45,6 +45,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: true,
         isError: false,
+        isSuccess: false,
         registerd: false,
         alertMsg: 'Login ...',
       };
@@ -54,6 +55,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: false,
+        isSuccess: true,
         registerd: true,
         alertMsg: action.payload.data.message,
       };
@@ -63,6 +65,7 @@ export default (state = initialState, action) => {
         ...state,
         isError: true,
         registerd: false,
+        isSuccess: false,
         isLoading: false,
         alertMsg: action.payload.response.data.message,
       };

@@ -64,3 +64,19 @@ export const loginSchema = Yup.object().shape({
     .min(8, 'Password at least 8 character')
     .required('Input Password'),
 });
+
+export const inputEmail = Yup.object().shape({
+  email: Yup.string()
+    .trim()
+    .email('Not a valid email address. Should be your@email.com')
+    .required('Email is required'),
+});
+
+export const resetPassword = Yup.object().shape({
+  newPassword: Yup.string()
+    .min(8, 'New Password at least 8 character')
+    .required('New password is required'),
+  repeatPassword: Yup.string()
+    .oneOf([Yup.ref('newPassword'), null], 'Password must match')
+    .required('Repeat password is Required'),
+});

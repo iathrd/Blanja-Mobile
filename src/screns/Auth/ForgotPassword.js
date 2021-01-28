@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Input, Item, Button} from 'native-base';
+import {Formik} from 'formik';
+import {inputEmail} from '../../helpers/formValidation';
 
 export default function ForgotPassword({navigation}) {
   return (
@@ -15,20 +17,49 @@ export default function ForgotPassword({navigation}) {
             a new password via email.
           </Text>
         </View>
-        <View style={styles.inputWrapper}>
-          <Item style={styles.item} placeholderLabel regular>
-            <Input style={styles.input} placeholder="Email" placeholderTextColor="#9b9b9b" />
-          </Item>
-        </View>
-        <View>
-          <Button
-            onPress={() => navigation.navigate('ResetPassword')}
-            style={styles.btnSend}
-            full
-            rounded>
-            <Text style={styles.btnText}>Send</Text>
-          </Button>
-        </View>
+        <Formik
+          initialValues={{email: ''}}
+          validationSchema={inputEmail}
+          onSubmit={(values) => navigation.navigate('ResetPassword')}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View>
+              <View style={styles.inputWrapper}>
+                <Item style={styles.item} placeholderLabel regular>
+                  <Input
+                    style={styles.input}
+                    placeholder="Email"
+                    placeholderTextColor="#9b9b9b"
+                    name="email"
+                    value={values.email}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                  />
+                </Item>
+                <View style={styles.errorWrapper}>
+                  {errors.email && touched.email && (
+                    <Text style={styles.textError}>{errors.email}</Text>
+                  )}
+                </View>
+              </View>
+              <View>
+                <Button
+                  onPress={handleSubmit}
+                  style={styles.btnSend}
+                  full
+                  rounded>
+                  <Text style={styles.btnText}>Send</Text>
+                </Button>
+              </View>
+            </View>
+          )}
+        </Formik>
       </View>
     </View>
   );
@@ -84,4 +115,15 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     textTransform: 'uppercase',
   },
+  errorWrapper: {
+    height: 4,
+    marginLeft: 15,
+    marginTop: 4,
+  },
+  textError: {
+    fontSize: 11,
+    lineHeight: 11,
+    color: '#F01F0E',
+  },
+  
 });

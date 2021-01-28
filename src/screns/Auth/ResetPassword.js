@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Input, Item, Button} from 'native-base';
+import {Formik} from 'formik';
+import {resetPassword} from '../../helpers/formValidation';
 
 export default function ResetPassword() {
   return (
@@ -14,33 +16,73 @@ export default function ResetPassword() {
             You need to change your password to activate your account
           </Text>
         </View>
-        <View style={styles.formWrapper}>
-          <View style={styles.inputWrapper}>
-            <Item style={styles.item} placeholderLabel regular>
-              <Input
-                style={styles.input}
-                placeholder="New Password"
-                placeholderTextColor="#9b9b9b"
-                secureTextEntry
-              />
-            </Item>
-          </View>
-          <View>
-            <Item style={styles.item} placeholderLabel regular>
-              <Input
-                style={styles.input}
-                placeholder="Confirmation New Password"
-                placeholderTextColor="#9b9b9b"
-                secureTextEntry
-              />
-            </Item>
-          </View>
-        </View>
-        <View>
-          <Button style={styles.btnReset} full rounded>
-            <Text style={styles.btnText}>Reset Password</Text>
-          </Button>
-        </View>
+        <Formik
+          initialValues={{newPassword: '', repeatPassword: ''}}
+          validationSchema={resetPassword}
+          onSubmit={(values) => console.log(values)}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View>
+              <View style={styles.formWrapper}>
+                <View style={styles.inputWrapper}>
+                  <Item style={styles.item} placeholderLabel regular>
+                    <Input
+                      style={styles.input}
+                      placeholder="New Password"
+                      placeholderTextColor="#9b9b9b"
+                      secureTextEntry
+                      name="newPassword"
+                      value={values.newPassword}
+                      onChangeText={handleChange('newPassword')}
+                      onBlur={handleBlur('newPassword')}
+                    />
+                  </Item>
+                  <View style={styles.errorWrapper}>
+                    {errors.newPassword && touched.newPassword && (
+                      <Text style={styles.textError}>{errors.newPassword}</Text>
+                    )}
+                  </View>
+                </View>
+                <View>
+                  <Item style={styles.item} placeholderLabel regular>
+                    <Input
+                      style={styles.input}
+                      placeholder="Confirmation New Password"
+                      placeholderTextColor="#9b9b9b"
+                      secureTextEntry
+                      name="repeatPassword"
+                      value={values.repeatPassword}
+                      onChangeText={handleChange('repeatPassword')}
+                      onBlur={handleBlur('repeatPassword')}
+                    />
+                  </Item>
+                  <View style={styles.errorWrapper}>
+                    {errors.repeatPassword && touched.repeatPassword && (
+                      <Text style={styles.textError}>
+                        {errors.repeatPassword}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              </View>
+              <View>
+                <Button
+                  onPress={handleSubmit}
+                  style={styles.btnReset}
+                  full
+                  rounded>
+                  <Text style={styles.btnText}>Reset Password</Text>
+                </Button>
+              </View>
+            </View>
+          )}
+        </Formik>
       </View>
     </View>
   );
@@ -97,5 +139,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: '#FFFFFF',
+  },
+  errorWrapper: {
+    height: 4,
+    marginLeft: 15,
+    marginTop: 4,
+  },
+  textError: {
+    fontSize: 11,
+    lineHeight: 11,
+    color: '#F01F0E',
   },
 });

@@ -18,6 +18,7 @@ import AddShippingAdress from '../AddShippingAdress';
 import ChangeShippingAdress from '../ChangeShippingAdress';
 import Home from '../Home/Home';
 import Catalog from '../Shop/Catalog';
+import SubCategory from '../Shop/SubCategory';
 
 //tab navigation
 import {MainTab} from '../Navigation/TopNavigation';
@@ -36,16 +37,38 @@ export function Homes() {
 
 export function Shops() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={({}) => ({
+        headerTitleAlign: 'center',
+        headerTitleStyle: styles.headerText,
+        headerStyle: {elevation: 0},
+        headerRight: () => (
+          <View style={styles.iconWrapper}>
+            <Icon name="search" size={25} />
+          </View>
+        ),
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={styles.iconLeft}>
+              <Icon name="arrow-back-ios" size={23} />
+            </View>
+          </TouchableOpacity>
+        ),
+      })}>
       <Stack.Screen
-        options={{headerStyle: {elevation: 0}}}
         name="Shop"
+        options={{headerTitleAlign: 'left', headerLeft: null}}
         component={MainTab}
       />
       <Stack.Screen
-        options={{headerStyle: {elevation: 0}, title: null}}
+        options={{title: null}}
         name="Catalog"
         component={Catalog}
+      />
+      <Stack.Screen
+        options={{title: 'Category'}}
+        name="Category"
+        component={SubCategory}
       />
     </Stack.Navigator>
   );
@@ -53,7 +76,16 @@ export function Shops() {
 
 export function MyBags() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={({}) => ({
+        headerStyle: {backgroundColor: 'transparent', elevation: 0},
+        title: null,
+        headerRight: () => (
+          <View style={styles.iconWrapper}>
+            <Icon name="search" size={25} />
+          </View>
+        ),
+      })}>
       <Stack.Screen name="MyBag" component={MyBag} />
     </Stack.Navigator>
   );
@@ -61,7 +93,19 @@ export function MyBags() {
 
 export function MyBagStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={({navigation}) => ({
+        headerTitleStyle: styles.headerText,
+        headerTitleAlign: 'center',
+        headerStyle: {elevation: 1},
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={styles.iconLeft}>
+              <Icon name="arrow-back-ios" size={23} />
+            </View>
+          </TouchableOpacity>
+        ),
+      })}>
       <Stack.Screen name="Checkout" component={Checkout} />
       <Stack.Screen
         options={{headerShown: false}}
@@ -80,7 +124,7 @@ export function MyProfiles() {
         title: null,
         headerRight: () => (
           <View style={styles.iconWrapper}>
-            <Icon name="search" size={27} />
+            <Icon name="search" size={25} />
           </View>
         ),
       }}>
@@ -109,7 +153,10 @@ export function MyOrderStack() {
         ),
       })}>
       <Stack.Screen
-        options={{title: null}}
+        options={{
+          title: null,
+          headerStyle: {backgroundColor: 'transparent', elevation: 0},
+        }}
         name="MyOrders"
         component={MyOrders}
       />

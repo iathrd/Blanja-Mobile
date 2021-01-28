@@ -13,7 +13,7 @@ export default function CategoryCard({data, navigation}) {
       activeOpacity={0.6}
       underlayColor="#DDDDDD"
       style={styles.touch}
-      onPress={() => navigation.navigate('Catalog')}>
+      onPress={() => navigation.navigate('Category')}>
       <View style={styles.card}>
         <View>
           <Text style={styles.categoryName}>New</Text>

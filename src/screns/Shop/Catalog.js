@@ -55,81 +55,91 @@ export default function Catalog({navigation}) {
   return (
     <View style={{flex: 1}}>
       <SortBottomShip bs={bs} fall={fall} />
-      <View style={styles.parent}>
-        <View style={styles.header}>
-          {filter.display === 'flex' && (
-            <View style={styles.labelWrapper}>
-              <Text style={styles.label}>Women’s tops</Text>
-            </View>
-          )}
-          <View style={styles.filterWrapper}>
-            <View style={styles.filter}>
-              <View style={styles.iconWrapper}>
-                <Icon name="filter-variant" size={25} />
+      <Animated.View
+        style={{
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+          flex: 1,
+        }}>
+        <View style={styles.parent}>
+          <View style={styles.header}>
+            {filter.display === 'flex' && (
+              <View style={styles.labelWrapper}>
+                <Text style={styles.label}>Women’s tops</Text>
               </View>
-              <View>
-                <Text style={styles.filterLabel}>Filters</Text>
-              </View>
-            </View>
-            <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+            )}
+            <View style={styles.filterWrapper}>
               <View style={styles.filter}>
                 <View style={styles.iconWrapper}>
-                  <Icon2 name="arrow-swap" size={20} />
+                  <Icon name="filter-variant" size={25} />
                 </View>
                 <View>
-                  <Text style={styles.filterLabel}>Price: lowest to high</Text>
+                  <Text style={styles.filterLabel}>Filters</Text>
                 </View>
               </View>
-            </TouchableOpacity>
-            <View style={styles.filter}>
-              {filter.display === 'flex' ? (
-                <TouchableOpacity onPress={() => setFilter({display: 'Grid'})}>
+              <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+                <View style={styles.filter}>
                   <View style={styles.iconWrapper}>
-                    <Icon name="view-grid" size={20} />
+                    <Icon2 name="arrow-swap" size={20} />
                   </View>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={() => setFilter({display: 'flex'})}>
-                  <View style={styles.iconWrapper}>
-                    <Icon name="view-list" size={20} />
+                  <View>
+                    <Text style={styles.filterLabel}>
+                      Price: lowest to high
+                    </Text>
                   </View>
-                </TouchableOpacity>
-              )}
+                </View>
+              </TouchableOpacity>
+              <View style={styles.filter}>
+                {filter.display === 'flex' ? (
+                  <TouchableOpacity
+                    onPress={() => setFilter({display: 'Grid'})}>
+                    <View style={styles.iconWrapper}>
+                      <Icon name="view-grid" size={20} />
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => setFilter({display: 'flex'})}>
+                    <View style={styles.iconWrapper}>
+                      <Icon name="view-list" size={20} />
+                    </View>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           </View>
-        </View>
-        <SafeAreaView style={{flex: 1}}>
-          <View style={styles.content}>
-            {filter.display === 'flex' ? (
-              <FlatList
-                data={product}
-                renderItem={({item}) => (
-                  <ProductCardFlex data={item} navigation={navigation} />
-                )}
-                onEndReached={loadData}
-                onEndReachedThreshold={0.4}
-                keyExtractor={(item) => item.id.toString()}
-              />
-            ) : (
-              <View style={{flexDirection: 'row'}}>
+          <SafeAreaView style={{flex: 1}}>
+            <View style={styles.content}>
+              {filter.display === 'flex' ? (
                 <FlatList
                   data={product}
-                  numColumns={2}
                   renderItem={({item}) => (
-                    <ProductCard
-                      data={item}
-                      display="grid"
-                      navigation={navigation}
-                    />
+                    <ProductCardFlex data={item} navigation={navigation} />
                   )}
                   onEndReached={loadData}
                   onEndReachedThreshold={0.4}
+                  keyExtractor={(item) => item.id.toString()}
                 />
-              </View>
-            )}
-          </View>
-        </SafeAreaView>
-      </View>
+              ) : (
+                <View style={{flexDirection: 'row'}}>
+                  <FlatList
+                    data={product}
+                    numColumns={2}
+                    renderItem={({item}) => (
+                      <ProductCard
+                        data={item}
+                        display="grid"
+                        navigation={navigation}
+                      />
+                    )}
+                    onEndReached={loadData}
+                    onEndReachedThreshold={0.4}
+                  />
+                </View>
+              )}
+            </View>
+          </SafeAreaView>
+        </View>
+      </Animated.View>
     </View>
   );
 }

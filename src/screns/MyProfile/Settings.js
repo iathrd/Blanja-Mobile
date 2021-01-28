@@ -93,7 +93,7 @@ export default function Settings() {
                     </View>
                   </View>
                   <View style={styles.forgotTextWrapper}>
-                    <Text style={styles.changeText}>Forgot Password? </Text>
+                    <Text style={styles.changeText}>Forgot Password?ss </Text>
                   </View>
                 </View>
                 <View style={styles.inputShipWrapper}>

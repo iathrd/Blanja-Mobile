@@ -17,7 +17,7 @@ export default function ForgotPassword({navigation}) {
         </View>
         <View style={styles.inputWrapper}>
           <Item style={styles.item} placeholderLabel regular>
-            <Input style={styles.input} placeholder="Email" />
+            <Input style={styles.input} placeholder="Email" placeholderTextColor="#9b9b9b" />
           </Item>
         </View>
         <View>

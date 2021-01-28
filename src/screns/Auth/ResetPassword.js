@@ -19,7 +19,7 @@ export default function ResetPassword() {
             <Item style={styles.item} placeholderLabel regular>
               <Input
                 style={styles.input}
-                placeholder="New password"
+                placeholder="New Password"
                 placeholderTextColor="#9b9b9b"
                 secureTextEntry
               />
@@ -29,7 +29,7 @@ export default function ResetPassword() {
             <Item style={styles.item} placeholderLabel regular>
               <Input
                 style={styles.input}
-                placeholder="New password"
+                placeholder="Confirmation New Password"
                 placeholderTextColor="#9b9b9b"
                 secureTextEntry
               />

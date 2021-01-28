@@ -5,34 +5,28 @@ import {Card, CardItem, Left, Right, Body} from 'native-base';
 export default function AdressCard({data, navigation, route}) {
   return (
     <View style={styles.cardWrapper}>
-      <Card style={styles.card}>
-        <View style={data.isPrimary ? styles.primaryAdress : styles.adressB}>
-          <CardItem style={styles.headerCard}>
-            <Left>
-              <Text style={styles.name}>{data.recipient}</Text>
-            </Left>
-            <Right>
-              <TouchableOpacity
-                onPress={
-                  route.name !== 'Checkout'
-                    ? () => navigation.navigate('ChangeShippingAdress', {data})
-                    : () => navigation.navigate('ShippingAdress')
-                }>
-                <Text style={styles.changeText}>Change</Text>
-              </TouchableOpacity>
-            </Right>
-          </CardItem>
-          <CardItem style={styles.adressContent}>
-            <Body style={styles.bodyWrapper}>
-              <View>
-                <Text style={styles.adress}>
-                  {`${data.adress}, ${data.postalCode}, ${data.city}`}
-                </Text>
-              </View>
-            </Body>
-          </CardItem>
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <View>
+            <Text style={styles.name}>{data.recipient}</Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={
+                route.name !== 'Checkout'
+                  ? () => navigation.navigate('ChangeShippingAdress', {data})
+                  : () => navigation.navigate('ShippingAdress')
+              }>
+              <Text style={styles.changeText}>Change</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </Card>
+        <View style={styles.cardBody}>
+          <Text style={styles.adress}>
+            {`${data.adress}, ${data.postalCode}, ${data.city}`}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -63,7 +57,13 @@ const styles = StyleSheet.create({
   },
   card: {
     borderRadius: 8,
+    paddingLeft: 28,
+    paddingTop: 18,
+    paddingBottom: 21,
+    paddingRight: 23,
+    backgroundColor: 'white',
     elevation: 2,
+    marginBottom: 15,
   },
   adressContent: {
     borderRadius: 8,
@@ -86,5 +86,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingTop: 8,
     paddingRight: 10,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cardBody: {
+    marginTop: 7,
   },
 });

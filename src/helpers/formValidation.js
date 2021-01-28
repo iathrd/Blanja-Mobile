@@ -48,6 +48,7 @@ export const createAdressSchema = Yup.object().shape({
     .min(12, 'Invalid number')
     .max(13, 'Invalid number')
     .required('Phone number is required'),
+  isPrimary: Yup.boolean(),
 });
 
 export const registerSchema = Yup.object().shape({

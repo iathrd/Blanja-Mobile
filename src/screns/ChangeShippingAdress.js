@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Item, Input, Label, Button} from 'native-base';
 import {Formik} from 'formik';
 import ModalSucces from '../components/ModalSuccess';
+import CheckBox from '@react-native-community/checkbox';
 
 import {adressSchema} from '../helpers/formValidation';
 import {useSelector, useDispatch} from 'react-redux';
@@ -40,6 +41,7 @@ export default function ChangeShippingAdress({route, navigation}) {
           city: data.city,
           postalCode: data.postalCode,
           phoneNumber: data.phoneNumber,
+          isPrimary: data.isPrimary,
         }}
         validationSchema={adressSchema}
         onSubmit={(values) => changeAdress(values)}>
@@ -50,6 +52,7 @@ export default function ChangeShippingAdress({route, navigation}) {
           values,
           errors,
           touched,
+          setFieldValue,
         }) => (
           <View>
             <View style={styles.InputWrapper}>
@@ -211,6 +214,20 @@ export default function ChangeShippingAdress({route, navigation}) {
                   )}
                 </View>
               </View>
+              <View style={styles.checkBoxWrapper}>
+                <CheckBox
+                  value={values.isPrimary}
+                  name="isPrimary"
+                  onValueChange={() =>
+                    setFieldValue('isPrimary', !values.isPrimary)
+                  }
+                  tintColors={{true: '#DB3022', false: '#9b9b9b'}}
+                  onFillColor="#DB3022"
+                />
+                <View>
+                  <Text style={styles.cekText}>Save as primary adress</Text>
+                </View>
+              </View>
             </View>
             <View>
               <Button
@@ -286,5 +303,13 @@ const styles = StyleSheet.create({
   },
   errorWrapper: {
     height: 3,
+  },
+  checkBoxWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  cekText: {
+    color: '#9b9b9b',
   },
 });

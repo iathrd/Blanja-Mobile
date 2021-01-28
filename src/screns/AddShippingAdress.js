@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import {Item, Input, Label, Button} from 'native-base';
+import {Item, Input, Button} from 'native-base';
 import {Formik} from 'formik';
 import {useSelector, useDispatch} from 'react-redux';
 import ModalSucces from '../components/ModalSuccess';
 import ModalError from '../components/ModalError';
+import CheckBox from '@react-native-community/checkbox';
 
 import {createAdressSchema} from '../helpers/formValidation';
 import adressAction from '../redux/actions/adresss';
@@ -51,6 +52,7 @@ export default function AddShippingAdress({navigation}) {
             saveAs: '',
             postalCode: '',
             phoneNumber: '',
+            isPrimary: false,
           }}
           validationSchema={createAdressSchema}
           onSubmit={(values) => createAdress(values)}>
@@ -61,6 +63,7 @@ export default function AddShippingAdress({navigation}) {
             values,
             errors,
             touched,
+            setFieldValue,
           }) => (
             <View>
               <View style={styles.inputWrapper}>
@@ -219,6 +222,20 @@ export default function AddShippingAdress({navigation}) {
                   )}
                 </View>
               </View>
+              <View style={styles.checkBoxWrapper}>
+                <CheckBox
+                  value={values.isPrimary}
+                  name="isPrimary"
+                  onValueChange={() =>
+                    setFieldValue('isPrimary', !values.isPrimary)
+                  }
+                  tintColors={{true: '#DB3022', false: '#9b9b9b'}}
+                  onFillColor="#DB3022"
+                />
+                <View>
+                  <Text style={styles.cekText}>Save as primary adress</Text>
+                </View>
+              </View>
               <View style={styles.btnWrapper}>
                 <Button
                   onPress={handleSubmit}
@@ -278,5 +295,12 @@ const styles = StyleSheet.create({
   },
   errorWrapper: {
     height: 5,
+  },
+  checkBoxWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cekText: {
+    color: '#9b9b9b',
   },
 });

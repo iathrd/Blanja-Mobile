@@ -1,11 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Card, CardItem, Left, Right, Body} from 'native-base';
 
 export default function AdressCard({data, navigation, route}) {
   return (
     <View style={styles.cardWrapper}>
-      <View style={styles.card}>
+      <View style={data.isPrimary ? styles.cardPrimary : styles.card}>
         <View style={styles.cardHeader}>
           <View>
             <Text style={styles.name}>{data.recipient}</Text>
@@ -71,13 +70,17 @@ const styles = StyleSheet.create({
   touch: {
     borderRadius: 8,
   },
-  primaryAdress: {
+  cardPrimary: {
     borderRadius: 8,
+    paddingLeft: 28,
+    paddingTop: 18,
+    paddingBottom: 21,
+    paddingRight: 23,
+    backgroundColor: 'white',
+    elevation: 2,
+    marginBottom: 15,
     borderColor: '#DB3022',
     borderWidth: 1,
-    paddingLeft: 10,
-    paddingTop: 8,
-    paddingRight: 10,
   },
   cardWrapper: {
     marginBottom: 5,

@@ -68,14 +68,16 @@ export default function Catalog({navigation}) {
               </View>
             )}
             <View style={styles.filterWrapper}>
-              <View style={styles.filter}>
-                <View style={styles.iconWrapper}>
-                  <Icon name="filter-variant" size={25} />
+              <TouchableOpacity onPress={() => navigation.navigate('Filter')}>
+                <View style={styles.filter}>
+                  <View style={styles.iconWrapper}>
+                    <Icon name="filter-variant" size={25} />
+                  </View>
+                  <View>
+                    <Text style={styles.filterLabel}>Filters</Text>
+                  </View>
                 </View>
-                <View>
-                  <Text style={styles.filterLabel}>Filters</Text>
-                </View>
-              </View>
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
                 <View style={styles.filter}>
                   <View style={styles.iconWrapper}>

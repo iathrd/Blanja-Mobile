@@ -19,6 +19,8 @@ import ChangeShippingAdress from '../ChangeShippingAdress';
 import Home from '../Home/Home';
 import Catalog from '../Shop/Catalog';
 import SubCategory from '../Shop/SubCategory';
+import Filter from '../Shop/Filter';
+import Brand from '../Shop/Brand';
 
 //tab navigation
 import {MainTab} from '../Navigation/TopNavigation';
@@ -38,7 +40,7 @@ export function Homes() {
 export function Shops() {
   return (
     <Stack.Navigator
-      screenOptions={({}) => ({
+      screenOptions={({navigation}) => ({
         headerTitleAlign: 'center',
         headerTitleStyle: styles.headerText,
         headerStyle: {elevation: 0},
@@ -69,6 +71,16 @@ export function Shops() {
         options={{title: 'Category'}}
         name="Category"
         component={SubCategory}
+      />
+      <Stack.Screen
+        options={{title: 'Filter', headerRight: null}}
+        name="Filter"
+        component={Filter}
+      />
+      <Stack.Screen
+        options={{title: 'Brand', headerRight: null}}
+        name="Brand"
+        component={Brand}
       />
     </Stack.Navigator>
   );
